@@ -64,7 +64,7 @@
     Then element with xpath "//input[@name='query']" should be present
     When I type "Behavior Driven Development" into element with xpath "//input[@name='query']"
     Then I click on element using JavaScript with xpath "//button[@class='search-submit']"
-    Then I wait for 2 sec
+    Then I wait for element with xpath "//article" to be present
     Then I wait for element with xpath "//div[@class='web-results']" to be present
     Then element with xpath "//div[@class='web-results']" should contain text "Cucumber"
 
@@ -131,4 +131,45 @@
     Then I wait for element with xpath "//div[@class='mainline-results']" to be present
     Then element with xpath "//div[@class='mainline-results']" should contain text "Cucumber"
 
+    @predefined15
+    Scenario: Predefined steps for Ebay
+      Given I open url "https://www.ebay.com/"
+      When I mouse over element with xpath "//li[@class='hl-cat-nav__js-tab']//a[text()='Electronics']"
+      And I click on element using JavaScript with xpath "//a[text()='Cameras & Photo']"
+      And I wait for element with xpath "//div[@id='mainContent']" to be present
+      Then element with xpath "//div[@id='mainContent']" should contain text "Camera Drones"
+      When I type "phone" into element with xpath "//input[@id='gh-ac']"
+      And I click on element with xpath "//input[@id='gh-btn']"
+      Then element with xpath "//div[@id='mainContent']" should contain text "iPhone"
+      When I click on element with xpath "//a[text()='Sign in']"
+      And I wait for element with xpath "//a[@id='gh-la']" to be present
+      Then element with xpath "//h1[text()='Please verify yourself to continue']" should be displayed
+
+
+
+    @predefined15
+    Scenario: Predefined steps for Youtube
+      Given I open url "https://www.youtube.com/"
+      Then I should see page title contains "YouTube"
+      Then element with xpath "//input[@id='search']" should be present
+      When I mouse over element with xpath "//img[@id='thumbnail']"
+      Then I click on element using JavaScript with xpath "//img[@id='thumbnail']"
+      Then I wait for 10 sec
+
+    Scenario: Predefined steps for Youtube 1
+      Given I open url "https://www.youtube.com/"
+      Then I should see page title contains "YouTube"
+      Then element with xpath "//div[@id='spinner-container']" should be present
+      When I mouse over element with xpath "(//ytd-rich-grid-renderer[contains(@class,'-results-renderer')]//div[@id='overlays'])[1]"
+      Then I click on element using JavaScript with xpath "(//ytd-thumbnail-overlay-now-playing-renderer[1]/span[1])[1]"
+      Then I wait for 10 sec
+
+    @predefined14
+    Scenario: Predefined steps for YouTube
+      Given I open url "https://www.youtube.com/"
+      Then I should see page title contains "YouTube"
+      Then I wait for element with xpath "//a[@id='thumbnail']" to be present
+      When I mouse over element with xpath "//a[@id='thumbnail']"
+      Then I click on element using JavaScript with xpath "//a[@id='thumbnail']"
+      Then I wait for 10 sec
 
