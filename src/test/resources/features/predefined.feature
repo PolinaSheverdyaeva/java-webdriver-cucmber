@@ -131,7 +131,7 @@
     Then I wait for element with xpath "//div[@class='mainline-results']" to be present
     Then element with xpath "//div[@class='mainline-results']" should contain text "Cucumber"
 
-    @predefined15
+    @predefined12
     Scenario: Predefined steps for Ebay
       Given I open url "https://www.ebay.com/"
       When I mouse over element with xpath "//li[@class='hl-cat-nav__js-tab']//a[text()='Electronics']"
@@ -147,7 +147,7 @@
 
 
 
-    @predefined15
+    @predefined13
     Scenario: Predefined steps for Youtube
       Given I open url "https://www.youtube.com/"
       Then I should see page title contains "YouTube"
@@ -156,6 +156,8 @@
       Then I click on element using JavaScript with xpath "//img[@id='thumbnail']"
       Then I wait for 10 sec
 
+
+    @predefined14
     Scenario: Predefined steps for Youtube 1
       Given I open url "https://www.youtube.com/"
       Then I should see page title contains "YouTube"
@@ -164,7 +166,7 @@
       Then I click on element using JavaScript with xpath "(//ytd-thumbnail-overlay-now-playing-renderer[1]/span[1])[1]"
       Then I wait for 10 sec
 
-    @predefined14
+    @predefined15
     Scenario: Predefined steps for YouTube
       Given I open url "https://www.youtube.com/"
       Then I should see page title contains "YouTube"
@@ -172,4 +174,34 @@
       When I mouse over element with xpath "//a[@id='thumbnail']"
       Then I click on element using JavaScript with xpath "//a[@id='thumbnail']"
       Then I wait for 10 sec
+      
+      @predefined16
+      Scenario: Predefined steps for Gumtree
+        Given I open url "https://www.gumtree.com.au/"
+        When I wait for element with xpath "//input[@id='search-query']" to be present
+        When I type "sewing machine" into element with xpath "//input[@id='search-query']"
+        Then I wait for 2 sec
+        And I type "Asquith" into element with xpath "//input[@id='search-area']"
+        When I click on element using JavaScript with xpath "//li[@class='header__search-bar-item header__search-bar-item--location search-location-all']//li[4]"
+        Then I wait for 2 sec
+        Then I click on element with xpath "//button[@class='header__search-button']"
+
+
+        @predefined17
+    Scenario: Predefined steps for Youtube blushsupreme
+      Given I open url "https://www.youtube.com/"
+      Then I should see page title contains "YouTube"
+      Then element with xpath "//input[@id='search']" should be present
+          When I type "blushsupreme" into element with xpath "//input[@id='search']"
+      Then I click on element using JavaScript with xpath "//button[@id='search-icon-legacy']"
+      Then I wait for 4 sec
+          Then I click on element using JavaScript with xpath "(//h3//*[@id='video-title'])[1]"
+          Then I wait for 10 sec
+
+
+
+
+
+
+
 
