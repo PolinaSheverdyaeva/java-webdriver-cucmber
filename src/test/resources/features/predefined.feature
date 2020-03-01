@@ -1,18 +1,15 @@
-
-  @predefined
-  Feature: Smoke steps
+@predefined
+Feature: Smoke steps
 
   @predefined1
   Scenario: Predefined steps for Google
     Given I open url "https://google.com"
     Then I should see page title as "Google"
-    And I resize window to 400 and 2000
     Then element with xpath "//input[@name='q']" should be present
     When I type "Behavior Driven Development" into element with xpath "//input[@name='q']"
     Then I click on element using JavaScript with xpath "(//input[@name='btnK'])[1]"
     Then I wait for element with xpath "//*[@id='res']" to be present
     Then element with xpath "//*[@id='res']" should contain text "Cucumber"
-
 
   @predefined2
   Scenario: Predefined steps for Bing
@@ -131,77 +128,114 @@
     Then I wait for element with xpath "//div[@class='mainline-results']" to be present
     Then element with xpath "//div[@class='mainline-results']" should contain text "Cucumber"
 
-    @predefined12
-    Scenario: Predefined steps for Ebay
-      Given I open url "https://www.ebay.com/"
-      When I mouse over element with xpath "//li[@class='hl-cat-nav__js-tab']//a[text()='Electronics']"
-      And I click on element using JavaScript with xpath "//a[text()='Cameras & Photo']"
-      And I wait for element with xpath "//div[@id='mainContent']" to be present
-      Then element with xpath "//div[@id='mainContent']" should contain text "Camera Drones"
-      When I type "phone" into element with xpath "//input[@id='gh-ac']"
-      And I click on element with xpath "//input[@id='gh-btn']"
-      Then element with xpath "//div[@id='mainContent']" should contain text "iPhone"
-      When I click on element with xpath "//a[text()='Sign in']"
-      And I wait for element with xpath "//a[@id='gh-la']" to be present
-      Then element with xpath "//h1[text()='Please verify yourself to continue']" should be displayed
+  @predefined12
+  Scenario: Predefined steps for Ebay
+    Given I open url "https://www.ebay.com/"
+    When I mouse over element with xpath "//li[@class='hl-cat-nav__js-tab']//a[text()='Electronics']"
+    And I click on element using JavaScript with xpath "//a[text()='Cameras & Photo']"
+    And I wait for element with xpath "//div[@id='mainContent']" to be present
+    Then element with xpath "//div[@id='mainContent']" should contain text "Camera Drones"
+    When I type "phone" into element with xpath "//input[@id='gh-ac']"
+    And I click on element with xpath "//input[@id='gh-btn']"
+    Then element with xpath "//div[@id='mainContent']" should contain text "iPhone"
+    When I click on element with xpath "//a[text()='Sign in']"
+    And I wait for element with xpath "//a[@id='gh-la']" to be present
+    Then element with xpath "//h1[text()='Please verify yourself to continue']" should be displayed
 
 
 
-    @predefined13
-    Scenario: Predefined steps for Youtube
-      Given I open url "https://www.youtube.com/"
-      Then I should see page title contains "YouTube"
-      Then element with xpath "//input[@id='search']" should be present
-      When I mouse over element with xpath "//img[@id='thumbnail']"
-      Then I click on element using JavaScript with xpath "//img[@id='thumbnail']"
-      Then I wait for 10 sec
+  @predefined13
+  Scenario: Predefined steps for Youtube
+    Given I open url "https://www.youtube.com/"
+    Then I should see page title contains "YouTube"
+    Then element with xpath "//input[@id='search']" should be present
+    When I mouse over element with xpath "//img[@id='thumbnail']"
+    Then I click on element using JavaScript with xpath "//img[@id='thumbnail']"
+    Then I wait for 10 sec
 
 
-    @predefined14
-    Scenario: Predefined steps for Youtube 1
-      Given I open url "https://www.youtube.com/"
-      Then I should see page title contains "YouTube"
-      Then element with xpath "//div[@id='spinner-container']" should be present
-      When I mouse over element with xpath "(//ytd-rich-grid-renderer[contains(@class,'-results-renderer')]//div[@id='overlays'])[1]"
-      Then I click on element using JavaScript with xpath "(//ytd-thumbnail-overlay-now-playing-renderer[1]/span[1])[1]"
-      Then I wait for 10 sec
+  @predefined14
+  Scenario: Predefined steps for Youtube 1
+    Given I open url "https://www.youtube.com/"
+    Then I should see page title contains "YouTube"
+    Then element with xpath "//div[@id='spinner-container']" should be present
+    When I mouse over element with xpath "(//ytd-rich-grid-renderer[contains(@class,'-results-renderer')]//div[@id='overlays'])[1]"
+    Then I click on element using JavaScript with xpath "(//ytd-thumbnail-overlay-now-playing-renderer[1]/span[1])[1]"
+    Then I wait for 10 sec
 
-    @predefined15
-    Scenario: Predefined steps for YouTube
-      Given I open url "https://www.youtube.com/"
-      Then I should see page title contains "YouTube"
-      Then I wait for element with xpath "//a[@id='thumbnail']" to be present
-      When I mouse over element with xpath "//a[@id='thumbnail']"
-      Then I click on element using JavaScript with xpath "//a[@id='thumbnail']"
-      Then I wait for 10 sec
-      
-      @predefined16
-      Scenario: Predefined steps for Gumtree
-        Given I open url "https://www.gumtree.com.au/"
-        When I wait for element with xpath "//input[@id='search-query']" to be present
-        When I type "sewing machine" into element with xpath "//input[@id='search-query']"
-        Then I wait for 2 sec
-        And I type "Asquith" into element with xpath "//input[@id='search-area']"
-        When I click on element using JavaScript with xpath "//li[@class='header__search-bar-item header__search-bar-item--location search-location-all']//li[4]"
-        Then I wait for 2 sec
-        Then I click on element with xpath "//button[@class='header__search-button']"
+  @predefined15
+  Scenario: Predefined steps for YouTube
+    Given I open url "https://www.youtube.com/"
+    Then I should see page title contains "YouTube"
+    Then I wait for element with xpath "//a[@id='thumbnail']" to be present
+    When I mouse over element with xpath "//a[@id='thumbnail']"
+    Then I click on element using JavaScript with xpath "//a[@id='thumbnail']"
+    Then I wait for 10 sec
 
-
-        @predefined17
-    Scenario: Predefined steps for Youtube blushsupreme
-      Given I open url "https://www.youtube.com/"
-      Then I should see page title contains "YouTube"
-      Then element with xpath "//input[@id='search']" should be present
-          When I type "blushsupreme" into element with xpath "//input[@id='search']"
-      Then I click on element using JavaScript with xpath "//button[@id='search-icon-legacy']"
-      Then I wait for 4 sec
-          Then I click on element using JavaScript with xpath "(//h3//*[@id='video-title'])[1]"
-          Then I wait for 10 sec
+  @predefined16
+  Scenario: Predefined steps for Gumtree
+    Given I open url "https://www.gumtree.com.au/"
+    When I wait for element with xpath "//input[@id='search-query']" to be present
+    When I type "sewing machine" into element with xpath "//input[@id='search-query']"
+    Then I wait for 2 sec
+    And I type "Asquith" into element with xpath "//input[@id='search-area']"
+    When I click on element using JavaScript with xpath "//li[@class='header__search-bar-item header__search-bar-item--location search-location-all']//li[4]"
+    Then I wait for 2 sec
+    Then I click on element with xpath "//button[@class='header__search-button']"
 
 
+  @predefined17
+  Scenario: Predefined steps for Youtube blushsupreme
+    Given I open url "https://www.youtube.com/"
+    Then I should see page title contains "YouTube"
+    Then element with xpath "//input[@id='search']" should be present
+    When I type "blushsupreme" into element with xpath "//input[@id='search']"
+    Then I click on element using JavaScript with xpath "//button[@id='search-icon-legacy']"
+    Then I wait for 4 sec
+    Then I click on element using JavaScript with xpath "(//h3//*[@id='video-title'])[1]"
+    Then I wait for 10 sec
+
+  @predefined18
+  Scenario: Steps for SearchEncrypt
+    Given I open url "https://www.searchencrypt.com/"
+    Then I should see page title contains "Search Encrypt"
+    When I type "BDD" into element with xpath "(//input[@name='q'])[1]"
+    And I click on element with xpath "//input[@name='q']"
+    Then I wait for element with xpath "//div[@id='results-list']" to be present
+    Then element with xpath "//div[@id='results-list']" should contain text "Cucucmber"
 
 
+  Scenario: Quote responsive design
+    Given I open url "https://skryabin.com/market/quote.html"
+    And I resize window to 1280 and 1024
+    Then element with xpath "//b[@id='location']" should be displayed
+    Then element with xpath "//b[@id='currentDate']" should be displayed
+    Then element with xpath "//b[@id='currentTime']" should be displayed
+    And I resize window to 800 and 1024
+    Then element with xpath "//b[@id='location']" should be displayed
+    Then element with xpath "//b[@id='currentDate']" should be displayed
+    Then element with xpath "//b[@id='currentTime']" should be displayed
+    And I resize window to 400 and 1024
+    Then element with xpath "//b[@id='location']" should not be displayed
+    Then element with xpath "//b[@id='currentDate']" should not be displayed
+    Then element with xpath "//b[@id='currentTime']" should not be displayed
 
 
+  Scenario: Username field
+    Given I open url "https://skryabin.com/market/quote.html"
+    When I type "a" into element with xpath "//*[ @name='username']"
+    And I click on element with xpath "//button[@id='formSubmit']"
+    And element with xpath "//label[@id='username-error']" should be displayed
+    When I type "b" into element with xpath "//*[@name='username']"
+    And element with xpath "//label[@id='username-error']" should not be displayed
+    And I wait for 3 sec
 
-
+  Scenario: Email field
+    Given I open url "https://skryabin.com/market/quote.html"
+    When I type "psheveryahoo.com" into element with xpath "//input[@name='email']"
+    And I click on element with xpath "//button[@id='formSubmit']"
+    When element with xpath "//label[@id='email-error']" should contain text "This field is required."
+    When I clear element with xpath "//input[@name='email']"
+    When I type "pshever@yahoo.com" into element with xpath "//input[@name='email']"
+    And element with xpath "//label[@id='email-error']" should not be displayed
+    And I wait for 3 sec
