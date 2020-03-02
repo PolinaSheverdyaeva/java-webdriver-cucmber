@@ -66,7 +66,6 @@ Feature: Smoke steps
     Then element with xpath "//div[@class='web-results']" should contain text "Cucumber"
 
 
-
   @predefined7
   Scenario: Steps for Searchencrypt
     Given I open url "https://www.searchencrypt.com"
@@ -143,7 +142,6 @@ Feature: Smoke steps
     Then element with xpath "//h1[text()='Please verify yourself to continue']" should be displayed
 
 
-
   @predefined13
   Scenario: Predefined steps for Youtube
     Given I open url "https://www.youtube.com/"
@@ -204,7 +202,7 @@ Feature: Smoke steps
     Then I wait for element with xpath "//div[@id='results-list']" to be present
     Then element with xpath "//div[@id='results-list']" should contain text "Cucucmber"
 
-
+  @quote1 @quote
   Scenario: Quote responsive design
     Given I open url "https://skryabin.com/market/quote.html"
     And I resize window to 1280 and 1024
@@ -220,22 +218,90 @@ Feature: Smoke steps
     Then element with xpath "//b[@id='currentDate']" should not be displayed
     Then element with xpath "//b[@id='currentTime']" should not be displayed
 
-
+  @quote2 @quote
   Scenario: Username field
     Given I open url "https://skryabin.com/market/quote.html"
-    When I type "a" into element with xpath "//*[ @name='username']"
+    When I type "a" into element with xpath "//input[ @name='username']"
     And I click on element with xpath "//button[@id='formSubmit']"
     And element with xpath "//label[@id='username-error']" should be displayed
-    When I type "b" into element with xpath "//*[@name='username']"
+    When I type "b" into element with xpath "//input[@name='username']"
     And element with xpath "//label[@id='username-error']" should not be displayed
     And I wait for 3 sec
 
+  @quote3
   Scenario: Email field
     Given I open url "https://skryabin.com/market/quote.html"
     When I type "psheveryahoo.com" into element with xpath "//input[@name='email']"
     And I click on element with xpath "//button[@id='formSubmit']"
-    When element with xpath "//label[@id='email-error']" should contain text "This field is required."
+    When element with xpath "//label[@id='email-error']" should contain text "Please enter a valid email address."
     When I clear element with xpath "//input[@name='email']"
     When I type "pshever@yahoo.com" into element with xpath "//input[@name='email']"
     And element with xpath "//label[@id='email-error']" should not be displayed
     And I wait for 3 sec
+
+  @quote4 @quote
+  Scenario: Password fields
+    Given I open url "https://skryabin.com/market/quote.html"
+    Then element with xpath "//input[@id='password']" should have attribute "value" as ""
+    Then element with xpath "//input[@id='confirmPassword']" should be displayed
+    When I type "password" into element with xpath "//input[@id='password']"
+    Then element with xpath "//input[@id='confirmPassword']" should be enabled
+
+
+  @quote5 @quote
+  Scenario: Name field
+    Given I open url "https://skryabin.com/market/quote.html"
+    When I click on element with xpath "//input[@id='name']"
+    And element with xpath "//input[@id='firstName']" should be displayed
+    When I type "Polina" into element with xpath "//input[@id='firstName']"
+    When I type "Shev" into element with xpath "//input[@id='lastName']"
+    And I click on element with xpath "//span[contains(text(),'Save')]"
+    Then element with xpath "//input[@id='name']" should have attribute "value" as "Polina Shev"
+
+  @quote6
+  Scenario: Required fiends
+    Given I open url "https://skryabin.com/market/quote.html"
+    When I type "Polina" into element with xpath "//input[@name='username']"
+    And I type "pshever@yahoo" into element with xpath "//input[@name='email']"
+    And I type "password" into element with xpath "//input[@id='password']"
+    And I type "password" into element with xpath "//input[@id='confirmPassword']"
+    And I click on element with xpath "//input[@id='name']"
+    When I type "Polina" into element with xpath "//input[@id='firstName']"
+    When I type "Shev" into element with xpath "//input[@id='lastName']"
+    And I click on element with xpath "//span[contains(text(),'Save')]"
+    And I click on element with xpath "//input[@name='agreedToPrivacyPolicy']"
+     #phone number
+    When I type "98086942" into element with xpath "//input[@name='phone']"
+    #gender
+    When I click on element with xpath "//*[@name='gender'][@value='female']"
+    #car make
+    When I click on element with xpath "//select[@name='carMake']/option[contains(text(),'Other')]"
+    # country of origin
+    When I click on element with xpath "//select[@name='countryOfOrigin']"
+    And I click on element with xpath "//select[@name='countryOfOrigin']/option[@value='Russia']"
+        # date of birth
+    When I click on element with xpath "//input[@id='dateOfBirth']"
+    And I click on element with xpath "//select[@*='selectMonth']/option[1]"
+    And I click on element with xpath "//select[@*='selectYear']/option[@value='1982']"
+    And I click on element with xpath "//td[@*='selectDay']/a[text()='28']"
+    Then element with xpath "//input[@id='dateOfBirth']" should have attribute "value" as "01/28/1982"
+    # third party
+    Then I click on element with xpath "//button[@id='thirdPartyButton']"
+    Then I accept alert
+    And I click on element with xpath "//button[@id='formSubmit']"
+    Then element with xpath "//legend[@class='applicationResult']" should have text as "Submitted Application"
+    Then element with xpath "//div[@class='well form-container container-fluid']" should contain text "Shev"
+    Then element with xpath "//div[@class='well form-container container-fluid']" should contain text "Russia"
+    Then element with xpath "//div[@class='well form-container container-fluid']" should contain text "01/28/1982"
+    Then element with xpath "//div[@class='well form-container container-fluid']" should contain text "98086942"
+    Then element with xpath "//div[@class='well form-container container-fluid']" should contain text "Other"
+    Then element with xpath "//div[@class='well form-container container-fluid']" should contain text "Polina"
+    Then element with xpath "//div[@class='well form-container container-fluid']" should contain text "Polina"
+    Then element with xpath "//div[@class='well form-container container-fluid']" should not have text as "password"
+    Then element with xpath "//div[@class='well form-container container-fluid']" should contain text "Polina Shev"
+    Then element with xpath "//b[@name='agreedToPrivacyPolicy']" should contain text "true"
+    Then element with xpath "//b[@name='password']" should contain text "entered"
+
+
+
+
