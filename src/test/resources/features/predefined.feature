@@ -301,6 +301,9 @@ Feature: Smoke steps
     Then element with xpath "//div[@class='well form-container container-fluid']" should contain text "Polina Shev"
     Then element with xpath "//b[@name='agreedToPrivacyPolicy']" should contain text "true"
     Then element with xpath "//b[@name='password']" should contain text "entered"
+    And I say helloworld
+
+
 
 
 
