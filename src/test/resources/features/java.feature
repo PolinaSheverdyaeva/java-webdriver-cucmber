@@ -7,7 +7,7 @@
       And I say "hello again"
       When I say "my message"
       Given I perform actions with "hello world" and "hello w"
-      Given I print url for "yahoo" page
+      Given I print url for "t" page
       And I "I have finished home work 4!"
       When I count to "100"
       When I call you "Polina"

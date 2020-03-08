@@ -65,11 +65,27 @@ public class JavaStepDefs {
     @Given("I print url for {string} page")
     public void iPrintUrlForPage(String site) {
 
+        switch (site.toLowerCase()){
+            case "google":
+                System.out.println("https://www.google.com/");
+                break;
+            case "yahoo":
+                System.out.println("https://www.yahoo.com/");
+                break;
+            case "sample":
+                System.out.println("https://skryabin.com/webdriver/html/sample.html");
+                break;
+                default:
+//                    System.out.println("Not supported site! Actual: " + site);
+                    throw new RuntimeException("Not supported site! Actual: " + site);
 
-        if (site.equalsIgnoreCase("google")) {
-            System.out.println("https://www.google.com/");
-        } else if (site.equalsIgnoreCase("sample")) {
-            System.out.println("https://skryabin.com/webdriver/html/sample.html");
+
+
+//
+//        if (site.equalsIgnoreCase("google")) {
+//            System.out.println("https://www.google.com/");
+//        } else if (site.equalsIgnoreCase("sample")) {
+//            System.out.println("https://skryabin.com/webdriver/html/sample.html");
 //        } else
 //            {
 //            System.out.println("Not supported site! Actual: " + site);
