@@ -69,6 +69,9 @@ public class JavaStepDefs {
             case "google":
                 System.out.println("https://www.google.com/");
                 break;
+            case "yo utube":
+                System.out.println("https://www.youtube.com/");
+                break;
             case "yahoo":
                 System.out.println("https://www.yahoo.com/");
                 break;
