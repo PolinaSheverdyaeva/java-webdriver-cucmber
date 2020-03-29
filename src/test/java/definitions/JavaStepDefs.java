@@ -4,7 +4,9 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class JavaStepDefs {
     @Given("I say hello world")
@@ -37,7 +39,6 @@ public class JavaStepDefs {
 
         System.out.println(this);
 
-//        Collections.copy(null, null);
 
         System.out.println("str1: " + str1);
         System.out.println("str1: " + str2);
@@ -65,11 +66,11 @@ public class JavaStepDefs {
     @Given("I print url for {string} page")
     public void iPrintUrlForPage(String site) {
 
-        switch (site.toLowerCase()){
+        switch (site.toLowerCase()) {
             case "google":
                 System.out.println("https://www.google.com/");
                 break;
-            case "yo utube":
+            case "youtube":
                 System.out.println("https://www.youtube.com/");
                 break;
             case "yahoo":
@@ -78,10 +79,9 @@ public class JavaStepDefs {
             case "sample":
                 System.out.println("https://skryabin.com/webdriver/html/sample.html");
                 break;
-                default:
+            default:
 //                    System.out.println("Not supported site! Actual: " + site);
-                    throw new RuntimeException("Not supported site! Actual: " + site);
-
+                throw new RuntimeException("Not supported site! Actual: " + site);
 
 
 //
@@ -113,18 +113,16 @@ public class JavaStepDefs {
     }
 
     @When("I call you {string}")
-    public void iCallYour(String name)
-    {
-        switch(name)
-        {
+    public void iCallYour(String name) {
+        switch (name) {
             case "Polina":
                 System.out.println("Hello, Polina!:)");
                 break;
             case "Katya":
                 System.out.println("Hello, Katya!:)");
                 break;
-                default:
-                    throw new RuntimeException("I don't know you, " + name + "!");
+            default:
+                throw new RuntimeException("I don't know you, " + name + "!");
         }
     }
 
@@ -135,21 +133,80 @@ public class JavaStepDefs {
         int b = Integer.valueOf(number2);
 
         if (a == b) // declare an if statement to determine if num1 and num2 equal
-            System.out.printf( "%d == %d\n", a, b );
+            System.out.printf("%d == %d\n", a, b);
 
         if (a != b)
-            System.out.printf( "%d != %d\n", a, b );
+            System.out.printf("%d != %d\n", a, b);
 
         if (a >= b)
-            System.out.printf( "%d >= %d\n", a, b );
+            System.out.printf("%d >= %d\n", a, b);
 
         if (a <= b)
-            System.out.printf( "%d <= %d\n", a, b );
+            System.out.printf("%d <= %d\n", a, b);
 
         if (a > b)
-            System.out.printf( "%d > %d\n", a, b );
+            System.out.printf("%d > %d\n", a, b);
 
         else if (a > b)
-        System.out.printf( "%d > %d\n", a, b );
+            System.out.printf("%d > %d\n", a, b);
+    }
+
+    @Given("I work with arrays")
+    public void iWorkWithArrays() {
+        String[] fruits = {"apple", "plum", "kiwi", "orange"};
+
+
+        System.out.println(fruits[0]);
+//        System.out.println(fruits[1]);
+//        System.out.println(fruits[3]);
+
+        for (String fruit : fruits) {
+            System.out.println(fruit);
+        }
+
+
+        List<String> myFruits = Arrays.asList("apple", "plum", "kiwi", "orange");
+        for (String fruit : fruits) {
+            System.out.println(fruit);
+        }
+
+        int[] nums = {5, 2, 3, 2, 5};
+        for (int number : nums) {
+            System.out.println("num " + number);
+        }
+        List<Integer> myNums = Arrays.asList(5, 2, 3, 2, 5);
+        for (int num : myNums) {
+            System.out.println("num: " + num);
+        }
+
+    }
+
+    @Given("I print if number {string} is positive")
+    public void iPrintIfNumberIsPositive(String num) {
+        int a = Integer.valueOf(num);
+        if (a >= 0)
+            System.out.println(a + " is positive number");
+        else if (a <= 0)
+            System.out.println(a + " is negative number");
+    }
+
+
+
+    //using arrays
+    static String[] alldays = {"Monday","Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+    @And("I print {string} days of week using array")
+    public void iPrintDaysOfWeekUsingArray(String days) {
+        int d = Integer.valueOf(days);
+
+        if (d <= 0 || d > 7) {
+            System.out.println(days + " invalid days of week number.");
+        }
+        for (int i=0; i<d; i++) {
+            if(i>0) {
+                System.out.print(", ");
+            }
+            System.out.print(alldays[i]);
+        }
+        System.out.println();
     }
 }
