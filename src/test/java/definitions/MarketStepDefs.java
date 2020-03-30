@@ -4,12 +4,10 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Keys;
+import org.assertj.core.api.Assertions;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.Select;
 
-
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static support.TestContext.getDriver;
@@ -63,6 +61,19 @@ public class MarketStepDefs {
 
     @When("I fill out required fields")
     public void iFillOutRequiredFields() {
+//        WebDriver browser = getDriver();
+//        WebElement element = browser.findElement(By.xpath("//input[@name='username']"));
+//        String myXpath = "//input[@name='email']";
+//        By mySelector = By.xpath(myXpath);
+//        element.sendKeys("Polina");
+//        getDriver().findElement(mySelector).sendKeys("pshever@yahoo");
+//        getDriver().findElement(By.xpath("//input[@id='password']")).sendKeys("password");
+//        getDriver().findElement(By.xpath("//input[@id='confirmPassword']")).sendKeys("password");
+//        getDriver().findElement(By.xpath("//input[@id='name']")).click();
+//        getDriver().findElement(By.xpath("//input[@id='firstName']")).sendKeys("Polina ");
+//        getDriver().findElement(By.xpath("//input[@id='lastName']")).sendKeys("Shev");
+//        getDriver().findElement(By.xpath("//span[contains(text(),'Save')]")).click();
+//        getDriver().findElement(By.xpath("//input[@name='agreedToPrivacyPolicy']")).click();
         getDriver().findElement(By.xpath("//input[@name='username']")).sendKeys("Polina");
         getDriver().findElement(By.xpath("//input[@name='email']")).sendKeys("pshever@yahoo");
         getDriver().findElement(By.xpath("//input[@id='password']")).sendKeys("password");
@@ -72,7 +83,6 @@ public class MarketStepDefs {
         getDriver().findElement(By.xpath("//input[@id='lastName']")).sendKeys("Shev");
         getDriver().findElement(By.xpath("//span[contains(text(),'Save')]")).click();
         getDriver().findElement(By.xpath("//input[@name='agreedToPrivacyPolicy']")).click();
-
 
     }
 
@@ -119,28 +129,23 @@ public class MarketStepDefs {
 
     }
 
-    @Then("I verify that submitted fields saved correctly")
-    public void iVerifyThatSubmittedFieldsSavedCorrectly() {
-        assertThat(getDriver().getTitle()).isEqualToIgnoringCase("Get a Quote");
-        assertThat(getDriver().findElement(By.xpath("//input[@name='username']")).getAttribute("value")).isEqualTo("Polina");
-        assertThat(getDriver().findElement(By.xpath("//input[@name='email']")).getAttribute("value")).contains("ps@yahoo");
-        assertThat(getDriver().findElement(By.xpath("//input[@id='password']")).getAttribute("value")).isEqualTo("password");
-        assertThat(getDriver().findElement(By.xpath("//input[@id='confirmPassword']")).isDisplayed()).isTrue();
-        assertThat(getDriver().findElement(By.xpath("//input[@id='confirmPassword']")).getAttribute("value")).isEqualTo("password");
-        assertThat(getDriver().findElement(By.xpath("//input[@id='name']")).getAttribute("value")).isEqualTo("Polina  Shev");
 
-
-    }
 
     @When("I fill out optional fields")
-    public void iFillOutOptionalFields() {
+    public void iFillOutOptionalFields() throws InterruptedException {
         getDriver().findElement(By.xpath("//input[@name='phone']")).sendKeys("12345678");
 //        date of Birth
         getDriver().findElement(By.xpath("//input[@id='dateOfBirth']")).click();
         getDriver().findElement(By.xpath("//select[@*='selectMonth']/option[1]")).click();
         getDriver().findElement(By.xpath("//select[@*='selectYear']/option[@value='1982']")).click();
         getDriver().findElement(By.xpath("//td[@*='selectDay']/a[text()='28']")).click();
-        getDriver().findElement(By.xpath("//select[@name='countryOfOrigin']/option[@value='Russia']")).click();
+//        getDriver().findElement(By.xpath("//select[@name='countryOfOrigin']")).click();
+//        getDriver().findElement(By.xpath("//select[@name='countryOfOrigin']/option[@value='Russia']")).click();
+        WebElement countrySelect = getDriver().findElement(By.xpath("//select[@name='countryOfOrigin']"));
+        new Select(countrySelect).selectByValue("China");
+
+        Thread.sleep(1000);
+        new Select(countrySelect).selectByValue("Russia");
         getDriver().findElement(By.xpath("//*[@name='gender'][@value='female']")).click();
         getDriver().findElement(By.xpath("//input[@name='allowedToContact']/../span")).click();
         getDriver().findElement(By.xpath("//textarea[@id='address']")).sendKeys("1 Nowhere St, Nowherengton");
@@ -159,7 +164,7 @@ public class MarketStepDefs {
     public void iVerifyOptionalFields() {
         String result = getDriver().findElement(By.xpath("//div[@id='quotePageResult']")).getText();
         String privacy = getDriver().findElement(By.xpath("//b[@name='agreedToPrivacyPolicy']")).getText();
-        String password = getDriver().findElement(By.xpath("//b[@name='password']")). getText();
+        String password = getDriver().findElement(By.xpath("//b[@name='password']")).getText();
         String allowedToContact = getDriver().findElement(By.xpath("//b[@name='allowedToContact']")).getText();
         String carMake = getDriver().findElement(By.xpath("//b[@name='carMake']")).getText();
 
@@ -178,5 +183,32 @@ public class MarketStepDefs {
 
     }
 
+    @Then("I verify required fields")
+    public void iVerifyRequiredFields(){
+//        assertThat(getDriver().getTitle()).isEqualToIgnoringCase("Get a Quote");
+//        assertThat(getDriver().findElement(By.xpath("//input[@name='username']")).getAttribute("value")).isEqualTo("Polina");
+//        assertThat(getDriver().findElement(By.xpath("//input[@name='email']")).getAttribute("value")).contains("ps@yahoo");
+//        assertThat(getDriver().findElement(By.xpath("//input[@id='password']")).getAttribute("value")).isEqualTo("password");
+//        assertThat(getDriver().findElement(By.xpath("//input[@id='confirmPassword']")).isDisplayed()).isTrue();
+//        assertThat(getDriver().findElement(By.xpath("//input[@id='confirmPassword']")).getAttribute("value")).isEqualTo("password");
+//        assertThat(getDriver().findElement(By.xpath("//input[@id='name']")).getAttribute("value")).isEqualTo("Polina  Shev");
+        String result = getDriver().findElement(By.xpath("//div[@id='quotePageResult']")).getText();
+        System.out.println(result);
+
+        assertThat(result).contains("Polina");
+        assertThat(result).contains("pshever@yahoo");
+        assertThat(result).doesNotContain("welcome");
+
+        String privacyPolicy = getDriver().findElement(By.xpath("//b[@name='thirdPartyAgreement']")).getText();
+        assertThat(privacyPolicy).isEqualTo("true");
+
+
+
+
+//        if (!result.contains("otherUsername")) {
+//            throw new RuntimeException("Doesn't contain Polina");
+    }
 
 }
+
+

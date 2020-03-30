@@ -7,6 +7,7 @@ import cucumber.api.java.en.When;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class JavaStepDefs {
     @Given("I say hello world")
@@ -151,36 +152,9 @@ public class JavaStepDefs {
             System.out.printf("%d > %d\n", a, b);
     }
 
-    @Given("I work with arrays")
-    public void iWorkWithArrays() {
-        String[] fruits = {"apple", "plum", "kiwi", "orange"};
 
 
-        System.out.println(fruits[0]);
-//        System.out.println(fruits[1]);
-//        System.out.println(fruits[3]);
-
-        for (String fruit : fruits) {
-            System.out.println(fruit);
-        }
-
-
-        List<String> myFruits = Arrays.asList("apple", "plum", "kiwi", "orange");
-        for (String fruit : fruits) {
-            System.out.println(fruit);
-        }
-
-        int[] nums = {5, 2, 3, 2, 5};
-        for (int number : nums) {
-            System.out.println("num " + number);
-        }
-        List<Integer> myNums = Arrays.asList(5, 2, 3, 2, 5);
-        for (int num : myNums) {
-            System.out.println("num: " + num);
-        }
-
-    }
-
+    // day 5 homework
     @Given("I print if number {string} is positive")
     public void iPrintIfNumberIsPositive(String num) {
         int a = Integer.valueOf(num);
@@ -209,4 +183,103 @@ public class JavaStepDefs {
         }
         System.out.println();
     }
+
+
+    @Given("I work with arrays")
+    public void iWorkWithArrays() {
+        String[] fruits = {"apple", "plum", "kiwi", "orange"};
+
+
+        System.out.println(fruits[0]);
+//        System.out.println(fruits[1]);
+//        System.out.println(fruits[3]);
+
+        for (String fruit : fruits) {
+            System.out.println(fruit);
+        }
+
+
+        List<String> myFruits = Arrays.asList("apple", "plum", "kiwi", "orange");
+        for (String fruit : myFruits) {
+            System.out.println(fruit);
+        }
+
+        int[] nums = {5, 2, 3, 2, 5};
+        for (int number : nums) {
+            System.out.println("num " + number);
+        }
+        List<Integer> myNums = Arrays.asList(5, 2, 3, 2, 5);
+        for (int num : myNums) {
+            System.out.println("num: " + num);
+        }
+
+    }
+    @Given("I work with maps")
+    public void iWorkWithMaps() {
+        Map<String, String> user = Map.of(
+                "username", "jdoe",
+                "password", "welcome",
+                "email", "john@doe.com"
+        );
+        Map<String, String> admin = Map.of(
+                "username", "admin",
+                "password", "pass1",
+                "email", "admin@doe.com"
+        );
+        System.out.println(user);
+        System.out.println(admin);
+        System.out.println(user.get("username"));
+        System.out.println(user.get("password"));
+        System.out.println(user.get("email"));
+
+    }
+
+
+    @Given("I solve  coding challenges")
+    public void iSolveCodingChallenges() {
+        //test cases
+        swap(3, 5);
+        //boundaries
+        isDivisibleBy3and4(9);
+        isDivisibleBy3and4(8);
+        isDivisibleBy3and4(12);
+        isDivisibleBy3and4(17);
+    }
+
+    //solutions
+    void isDivisibleBy3and4(int num){
+        System.out.println("Is divisible func " + num);
+        boolean isDivBy3 = num % 3 == 0;
+        boolean isDivBy4 = num % 4 == 0;
+        if (isDivBy3 && isDivBy4) {
+            System.out.println("Div by 3 and 4");
+        } else if (isDivBy3) {
+            System.out.println("Div by 3");
+        } else if (isDivBy4) {
+            System.out.println("Div by 4");
+
+//        if (num % 3 == 0 && num % 4 == 0){
+//            System.out.println("Div by 3 and 4");
+//        } else if (num % 3 == 0){
+//            System.out.println("Div by 3");
+//        } else if (num % 4 == 0){
+//            System.out.println("Div by 4");
+        } else {
+            System.out.println("Not div by 3 and 4");
+        }
+
+    }
+
+    void swap(int a, int b){
+        System.out.println("Swap func");
+        System.out.println("a: " + a);
+        System.out.println("b: " + b);
+        int temp = a;
+        a = b;
+        b = temp;
+        System.out.println("a: " + a);
+        System.out.println("b: " + b);
+
+    }
+
 }
