@@ -25,8 +25,8 @@ Feature: Java steps
   Scenario: Maps
     Given I work with maps
 
-    @java4
-    Scenario: Challenges
-      Given I solve  coding challenges
+  @java4
+  Scenario: Challenges
+    Given I solve  coding challenges
 
 

@@ -4,10 +4,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class JavaStepDefs {
     @Given("I say hello world")
@@ -232,6 +229,21 @@ public class JavaStepDefs {
         System.out.println(user.get("password"));
         System.out.println(user.get("email"));
 
+
+//        homework6
+        Map<String, String> info = new LinkedHashMap<>();
+        info.put("firstName","John");
+        info.put("middleName", "George");
+        System.out.println("Swap of First Name and Middle Name");
+        System.out.println("First Name: " + info.get("firstName"));
+        System.out.println("Middle Name: " + info.get("middleName"));
+        String s = info.get("firstName");
+        info.put("firstName", info.get("middleName"));
+        info.put("middleName", s);
+        System.out.println("Result:");
+        System.out.println("First Name: " + info.get("firstName"));
+        System.out.println("Middle Name: " + info.get("middleName"));
+
     }
 
 
@@ -281,5 +293,7 @@ public class JavaStepDefs {
         System.out.println("b: " + b);
 
     }
+
+
 
 }

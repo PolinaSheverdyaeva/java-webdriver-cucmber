@@ -195,12 +195,43 @@ public class MarketStepDefs {
         String result = getDriver().findElement(By.xpath("//div[@id='quotePageResult']")).getText();
         System.out.println(result);
 
+
+//
+//        Submitted Application
+//        Username Polina
+//        Email pshever@yahoo
+//                Password [entered]
+//        First Name Polina
+//        Last Name Shev
+//        Name Polina Shev
+//        Agreed To Privacy Policy true
+//        Phone 12345678
+//        Date Of Birth 01/28/1982
+//        Country Of Origin Russia
+//        Gender female
+//        Allowed To Contact true
+//        Address 1 Nowhere St, Nowherengton
+//        Car Make Other
+//        Contact Person Name Polina
+//        Contact Person Phone 87654321
+//        Location Los Altos, CA 94022
+//        Current Date 04/02/2020
+//        Current Time 6:55 am Australian Eastern Daylight Time
+//        Third Party Agreement accepted
+//        Attachment Name Decomposition.docx
+//
+//                Return
+
+        String password = getDriver().findElement(By.xpath("//b[@name='password']")).getText();
+
         assertThat(result).contains("Polina");
         assertThat(result).contains("pshever@yahoo");
         assertThat(result).doesNotContain("welcome");
 
+
         String privacyPolicy = getDriver().findElement(By.xpath("//b[@name='thirdPartyAgreement']")).getText();
-        assertThat(privacyPolicy).isEqualTo("true");
+        assertThat(privacyPolicy).isEqualTo("accepted");
+        assertThat(password).isEqualTo("[entered]");
 
 
 
