@@ -9,13 +9,19 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 
 
+import java.util.concurrent.TimeUnit;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static support.TestContext.getDriver;
 
 public class MarketStepDefs {
     @Given("I go to {string} page")
     public void iGoToPage(String page) {
+        getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         switch (page.toLowerCase()) {
+            case "usps":
+                getDriver().get("https://www.usps.com/");
+                break;
             case "quote":
                 getDriver().get("https://skryabin.com/market/quote.html");
                 break;

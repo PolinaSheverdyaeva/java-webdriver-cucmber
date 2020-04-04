@@ -28,6 +28,8 @@ Feature: Marketing app test suite
     And I submit the form
     Then I verify required fields
     Then I verify optional fields
+
+
     
 
 
