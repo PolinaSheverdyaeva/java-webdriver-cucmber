@@ -29,7 +29,10 @@ Feature: Marketing app test suite
     Then I verify required fields
     Then I verify optional fields
 
-
+  @market3
+  Scenario: Printing logs
+    Given I go to "yahoo" page
+    And I print logs to the console
     
 
 

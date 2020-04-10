@@ -6,9 +6,13 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.*;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.support.ui.Select;
 
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,6 +31,9 @@ public class MarketStepDefs {
                 break;
             case "google":
                 getDriver().get("https://google.com");
+                break;
+            case "yahoo":
+                getDriver().get("https://au.yahoo.com");
                 break;
             default:
 //                System.out.println("Not recohnised page" + page);
@@ -246,6 +253,18 @@ public class MarketStepDefs {
 //            throw new RuntimeException("Doesn't contain Polina");
     }
 
+    @And("I print logs to the console")
+    public void iPrintLogsToTheConsole() throws InterruptedException {
+            Thread.sleep(4000);
+        LogEntries logs = getDriver().manage().logs().get("browser");
+//        LogEntries logs = getDriver().manage().logs().get(LogType.BROWSER);
+
+        System.out.println(">>>>>>>>Browser logs. Begin:");
+       for (LogEntry log : logs){
+           System.out.println(log);
+       }
+        System.out.println(">>>>>>>>>Browser logs. End");
+    }
 }
 
 

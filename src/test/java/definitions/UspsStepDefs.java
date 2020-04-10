@@ -62,7 +62,10 @@ public class UspsStepDefs {
             //every single item verification
         List<WebElement> list = getDriver().findElements(By.xpath("//*[@class='zipcode-result-address']"));
         for (WebElement item : list) {
-            assertThat(item.getText()).contains(zip);
+            String itemText = item.getText();
+            System.out.println(item.getText());
+//            assertThat(item.getText()).contains(zip);
+            assertThat(itemText).contains(zip);
 
         }
 
