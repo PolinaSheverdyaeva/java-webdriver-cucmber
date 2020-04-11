@@ -6,6 +6,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
@@ -264,6 +265,30 @@ public class MarketStepDefs {
            System.out.println(log);
        }
         System.out.println(">>>>>>>>>Browser logs. End");
+    }
+
+    @And("I fill multi-select")
+    public void iFillMultiSelect() {
+        WebElement ford = getDriver().findElement(By.xpath("//select[@name='carMake']/option[@value='Ford']"));
+        WebElement bmw = getDriver().findElement(By.xpath("//select[@name='carMake']/option[@value='BMW'] "));
+
+//        Actions actions = new Actions(getDriver());
+
+//        actions.moveToElement(ford).click().pause(1000).keyDown(Keys.CONTROL).moveToElement(bmw).click().perform();
+
+//        1 option
+        new Actions(getDriver())
+                .click(ford)
+                .keyDown(Keys.CONTROL)
+                .click(bmw)
+                .perform();
+
+        //2 option
+//        WebElement carsElement = getDriver().findElement(By.xpath("//select[@name='carMake']"));
+//        Select carsSelect = new Select(carsElement);
+//        carsSelect.selectByValue("Ford");
+////        carsSelect.deselectByValue("Ford");
+//        carsSelect.selectByValue("BMW");
     }
 }
 

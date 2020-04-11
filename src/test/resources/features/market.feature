@@ -33,6 +33,11 @@ Feature: Marketing app test suite
   Scenario: Printing logs
     Given I go to "yahoo" page
     And I print logs to the console
+
+    @market4
+    Scenario: Multi-Select
+      Given I go to "quote" page
+      And I fill multi-select
     
 
 
