@@ -34,10 +34,10 @@ Feature: Marketing app test suite
     Given I go to "yahoo" page
     And I print logs to the console
 
-    @market4
-    Scenario: Multi-Select
-      Given I go to "quote" page
-      And I fill multi-select
+  @market4
+  Scenario: Multi-Select
+    Given I go to "quote" page
+    And I fill multi-select
     
 
 

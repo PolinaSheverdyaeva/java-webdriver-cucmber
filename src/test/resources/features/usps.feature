@@ -2,16 +2,31 @@
 Feature: USPS test suite
 
   @usps1
-  Scenario Outline: Validate ZIP code for Portnov Computer School
+  Scenario Outline: Validate ZIP code for different addresses
     Given I go to "usps" page
     When I go to Lookup ZIP page by address
-    And I fill out "4970 El Camino Real" street, "Los Altos" city, "CA" state
-    Then I validate "94022" zip code exists in the result
+    And I fill out "<street>" street, "<city>" city, "<state>" state
+    Then I validate "<zip>" zip code exists in the result
     Examples:
       | street              | city      | state | zip   |
       | 4970 El Camino Real | Los Altos | CA    | 94022 |
       | 11 Wall St          | New York  | NY    | 10005 |
       | 111 S Michigan Ave  | Chicago   | IL    | 60603 |
+
+#  @usps2
+#  Scenario: Validate ZIP code for NY Stock Exchange
+#    Given I go to "usps" page
+#    When I go to Lookup ZIP page by address
+#    And I fill out "11 Wall St" street, "New York" city, "NY" state
+#    Then I validate "10005" zip code exists in the result
+#
+#  @usps3
+#  Scenario: Validate ZIP code of Art Institute of Chicago
+#    Given I go to "usps" page
+#    When I go to Lookup ZIP page by address
+#    And I fill out "111 S Michigan Ave" street, "Chicago" city, "IL" state
+#    Then I validate "60603" zip code exists in the result
+#
 
   @usps4
   Scenario: Calculate price

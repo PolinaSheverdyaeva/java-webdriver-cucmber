@@ -12,15 +12,18 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import support.TestContext;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static support.TestContext.*;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static support.TestContext.getDriver;
+
 
 public class UspsStepDefs {
     @When("I go to Lookup ZIP page by address")
@@ -28,7 +31,8 @@ public class UspsStepDefs {
 //        getDriver().findElement(By.xpath("//a[@id='mail-ship-width']")).click();
         //mouse over the element instead of clicking 2 different elements
         WebElement mailAndSnip = getDriver().findElement(By.xpath("//a[@id='mail-ship-width']"));
-        new Actions(getDriver()).moveToElement(mailAndSnip).perform();
+        getActions().moveToElement(mailAndSnip).perform();
+//        new Actions(getDriver()).moveToElement(mailAndSnip).perform();
         getDriver().findElement(By.xpath("//li[@class='tool-zip']//a")).click();
         getDriver().findElement(By.xpath("//a[contains(@class,'zip-code-address')]")).click();
 //        Actions actions = new Actions(getDriver()); 
@@ -55,8 +59,8 @@ public class UspsStepDefs {
         WebElement resultElement = getDriver().findElement(By.xpath("//div[@id='zipByAddressDiv']"));
 
         //check if the container has that occurrence
-        WebDriverWait wait = new WebDriverWait(getDriver(), 5);
-        wait.until(ExpectedConditions.textToBePresentInElement(resultElement, zip));
+//        WebDriverWait wait = new WebDriverWait(getDriver(), 5);
+        getWait().until(ExpectedConditions.textToBePresentInElement(resultElement, zip));
 
 //        new WebDriverWait(getDriver(),5).until(ExpectedConditions.textToBePresentInElement(resultElement, zip));
 
@@ -76,6 +80,7 @@ public class UspsStepDefs {
             assertThat(itemText).contains(zip);
 
         }
+//        getWait(10).until();
 
 //        List<WebElement> list = getDriver().findElements(By.xpath("//*[@class='zipcode-result-address']"));
 //        for (WebElement item : list) {
@@ -90,7 +95,8 @@ public class UspsStepDefs {
 //        getDriver().findElement(By.xpath("//a[@id='mail-ship-width']")).click();
         //mouse over instead of click
         WebElement mailAndSnip = getDriver().findElement(By.xpath("//a[@id='mail-ship-width']"));
-        new Actions(getDriver()).moveToElement(mailAndSnip).perform();
+        getActions().moveToElement(mailAndSnip).perform();
+//        new Actions(getDriver()).moveToElement(mailAndSnip).perform();
         getDriver().findElement(By.xpath("//li[@class='tool-calc']//a")).click();
 
     }
@@ -118,7 +124,7 @@ public class UspsStepDefs {
     @When("I go to Find a Location Page")
     public void iGoToFindALocationPage() {
         WebElement mailShip = getDriver().findElement(By.xpath("//a[@id='mail-ship-width']"));
-        new Actions(getDriver()).moveToElement(mailShip).perform();
+        getActions().moveToElement(mailShip).perform();
         getDriver().findElement(By.xpath("//li[@class='tool-find']/a")).click();
 
     }
@@ -135,16 +141,32 @@ public class UspsStepDefs {
     }
 
     @And("I fill in {string} street, {string} city, {string} state")
-    public void iFillInStreetCityState(String street, String city, String state) {
+    public void iFillInStreetCityState(String street, String city, String state) throws InterruptedException {
         getDriver().findElement(By.xpath("//input[@id='search-input']")).click();
         WebElement address = getDriver().findElement(By.xpath("//input[@id='addressLineOne']"));
-        WebDriverWait wait = new WebDriverWait(getDriver(),5);
-        wait.until(ExpectedConditions.visibilityOf(address));
-        getDriver().findElement(By.xpath("//input[@id='addressLineOne']")).sendKeys(street);
+//        WebDriverWait wait = new WebDriverWait(getDriver(),5);
+//        getWait().until(ExpectedConditions.visibilityOf(address));
+        //another option
+//        getWait().until(ExpectedConditions.elementToBeClickable(address));
+//        address.click();
+        //1 option for debugging
+//        Thread.sleep(1000);
+        //2 option - try again
+//        getWait().until(ExpectedConditions.elementToBeClickable(address));
+        address.sendKeys(street);
+//        if (!address.getAttribute("value").equals(street)){
+//            address.clear();
+//            address.sendKeys(street);
+
+        //3 option - use while loop
+        for(int i = 0; !address.getAttribute("value").equals(street) && i < 5; i++ ){
+            address.clear();
+            address.sendKeys(street);
+        }
         getDriver().findElement(By.xpath("//input[@id='cityOrZipCode']")).sendKeys(city);
         WebElement stateElement = getDriver().findElement(By.xpath("//select[@id='servicesStateSelect']"));
         new Select(stateElement).selectByValue(state);
-        getDriver().findElement(By.xpath("//a[contains(text(),'Go to Results')]")).click();
+        getDriver().findElement(By.xpath("//div[contains(@class,'goto')]/a")).click();
     }
 
     @Then("I print the phone number and validate it is {string}")

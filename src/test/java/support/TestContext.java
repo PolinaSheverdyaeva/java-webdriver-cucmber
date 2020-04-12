@@ -14,11 +14,14 @@ import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,20 +30,53 @@ public class TestContext {
     private static WebDriver driver;
 
     public static WebDriver getDriver() {
+
         return driver;
     }
 
-    public static Actions getActions() {
+    // private - visible inside class and package
+    // default - no prefix, visible inside class and package
+    // protected - visible inside class, package and subclasses
+    // public - visible everywhere
+
+    public static Actions getActions(){
         return new Actions(driver);
+//        new Actions(getDriver()).moveToElement();
+//        new WebDriverWait(getDriver(), 5);
+//        new WebDriverWait(getDriver(), 10);
+//        new Select(element);
+//        String str = "value";
+//        Integer integer = 5;
+//        ArrayList<Integer> list = new ArrayList();
+//        list.add(5);
+//        list.add(1);
+//        ArrayList<Integer> otherList = new ArrayList();
+//        otherList.add(6);
+//        otherList.add(63);
+//
+//        System.out.println();
+//        ExpectedConditions.alertIsPresent();
     }
 
-    public static WebDriverWait getWait() {
-        return getWait(5);
+//    public static Actions getActions() {
+//        return new Actions(driver);
+//    }
+
+    public static WebDriverWait getWait(){
+        return new WebDriverWait(driver,5);
     }
 
-    public static WebDriverWait getWait(int timeout) {
+    public static WebDriverWait getWait(int timeout){
         return new WebDriverWait(driver, timeout);
     }
+
+//    public static WebDriverWait getWait() {
+//        return getWait(5);
+//    }
+
+//    public static WebDriverWait getWait(int timeout) {
+//        return new WebDriverWait(driver, timeout);
+//    }
 
     public static void initialize() {
         initialize("chrome", false);

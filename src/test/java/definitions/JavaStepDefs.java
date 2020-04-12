@@ -210,6 +210,19 @@ public class JavaStepDefs {
             System.out.println("num: " + num);
         }
 
+//        List<String> list = new ArrayList<>();
+        List<String> list = Arrays.asList("orange","pear","apple");
+//        list.add("orange");
+//        list.add("pear");
+//        list.add("apple");
+
+        for (String item : list) {
+            System.out.println(item);
+        }
+
+        for (int i=0; i < list.size(); i++){
+            System.out.println(list.get(i));
+        }
     }
     @Given("I work with maps")
     public void iWorkWithMaps() {
