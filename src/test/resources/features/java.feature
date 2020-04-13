@@ -29,4 +29,8 @@ Feature: Java steps
   Scenario: Challenges
     Given I solve  coding challenges
 
+    @java5
+    Scenario: Arrays from Katya
+      Given Trying to solve tasks
+
 

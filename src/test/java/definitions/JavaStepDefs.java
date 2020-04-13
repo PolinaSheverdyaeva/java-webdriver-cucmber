@@ -226,7 +226,37 @@ public class JavaStepDefs {
         for (int i=0; i < list.size(); i++){
             System.out.println(list.get(i));
         }
+
+
     }
+    @Given("Trying to solve tasks")
+    public void tryingToSolveTasks() {
+        int[] nums = {0,1,0,3,12};
+            int n = nums.length;
+            int count = 0;
+            // Traverse the array. If element encountered is non-zero, then
+            // replace the element at index 'count' with this element
+            for (int i = 0; i < n; i++){
+                if (nums[i] != 0)
+                // arr[count++] = arr[i]; // here count is incremented
+                swapNumbers(nums,count++,i);
+            }
+            for (int j = 0; j < n; j++){
+                System.out.print(nums[j]+",");
+            }
+        }
+
+        public static void swapNumbers(int [] arr, int pos1, int pos2){
+            int temp  = arr[pos2];
+            arr[pos2] = arr[pos1];
+            arr[pos1] = temp;
+        }
+
+
+
+
+
+
     @Given("I work with maps")
     public void iWorkWithMaps() {
         Map<String, String> user = Map.of(
