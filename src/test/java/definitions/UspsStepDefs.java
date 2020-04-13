@@ -4,9 +4,8 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.assertj.core.data.Percentage;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -18,6 +17,7 @@ import support.TestContext;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static support.TestContext.*;
 
@@ -175,6 +175,204 @@ public class UspsStepDefs {
         String resultPhone = getDriver().findElement(By.xpath("//p[@id='detailPhone']")).getText();
         assertThat(resultPhone).contains(phone);
     }
+
+    @When("I click on {string}")
+    public void iClickOn(String measurement) throws InterruptedException {
+        getDriver().findElement(By.xpath("//div[@id='menu']/ul/li/a[contains(text(),'"+ measurement +"')]")).click();
+        WebElement calFrom = getDriver().findElement(By.xpath("//select[@id='calFrom']"));
+        getWait().until(ExpectedConditions.elementToBeClickable(calFrom));
+
+    }
+
+    @And("I set {string} to {string}")
+    public void iSetTo(String unitFrom, String unitTo) throws InterruptedException {
+        //Select by actions
+//        WebElement unit1Elem = getDriver().findElement(By.xpath("//select[@id='calFrom']//option[(text()='" + unitFrom +"')]"));
+//        Actions actions = new Actions(getDriver());
+//        actions.moveToElement(unit1Elem).click().perform();
+//        WebElement calTo = getDriver().findElement(By.xpath("//select[@id='calTo']"));
+//        getWait().until(ExpectedConditions.elementToBeClickable(calTo));
+//        WebElement unit2Elem = getDriver().findElement(By.xpath("//select[@id='calTo']//option[text()='" + unitTo + "']"));
+//        actions.moveToElement(unit2Elem).click().perform();
+        //SelectByVisibleText
+        WebElement calFromElement = getDriver().findElement(By.xpath("//select[@id='calFrom']"));
+        new Select(calFromElement).selectByVisibleText(unitFrom);
+        WebElement calToElement = getDriver().findElement(By.xpath("//select[@id='calTo']"));
+        getWait().until(ExpectedConditions.elementToBeClickable(calToElement));
+        new Select(calToElement).selectByVisibleText(unitTo);
+
+    }
+
+    @Then("I enter into From field {string} and verify {string} result")
+    public void iEnterIntoFromFieldAndVerifyResult(String value, String passedResult) throws InterruptedException {
+        getDriver().findElement(By.xpath("//input[@name='fromVal']")).sendKeys(value);
+        String resultValue = getDriver().findElement(By.xpath("//input[@name='toVal']")).getAttribute("value");
+        assertThat(resultValue).contains(passedResult);
+    }
+
+    @And("I clear all calculator fields")
+    public void iClearAllCalculatorFields() {
+        getDriver().findElement(By.xpath("//a[contains(@href,'auto-loan')]")).click();
+        getDriver().findElement(By.xpath("//input[@id='cloanamount']")).clear();
+        getDriver().findElement(By.xpath("//input[@id='cloanterm']")).clear();
+        getDriver().findElement(By.xpath("//input[@id='cinterestrate']")).clear();
+        getDriver().findElement(By.xpath("//input[@id='cdownpayment']")).clear();
+        getDriver().findElement(By.xpath("//input[@id='ctradeinvalue']")).clear();
+        getDriver().findElement(By.xpath("//input[@id='csaletax']")).clear();
+        getDriver().findElement(By.xpath("//input[@id='ctitlereg']")).clear();
+    }
+
+    @And("I calculate")
+    public void iCalculate() throws InterruptedException {
+        getDriver().findElement(By.xpath("//input[@type='image']")).click();
+    }
+
+    @Then("I verify {string} calculator error")
+    public void iVerifyCalculatorError(String error) {
+        String result = getDriver().findElement(By.xpath("//tr//td[@valign='top'][2]")).getText();
+        System.out.println(result);
+        assertThat(result).contains(error);
+//second option
+//        List<WebElement> list = getDriver().findElements(By.xpath("//td[@valign='top']/div/font"));
+//        List<String> errorMessages = new ArrayList<>();
+//        for (WebElement item : list){
+//            String errorMessage = item.getText();
+//            errorMessages.add(errorMessage);
+//        }
+//        assertThat(errorMessages).contains(error);
+    }
+
+    @And("I enter {string} price, {string} months, {string} interest, {string} downpayment, {string} trade-in, {string} state, {string} percent tax, {string} fees")
+    public void iEnterPriceMonthsInterestDownpaymentTradeInStatePercentTaxFees(String autoPrice, String loanTerm, String interestRate, String downPayment, String tradeInValue, String state, String percentTax, String fees) {
+        getDriver().findElement(By.xpath("//input[@name='cloanamount']")).sendKeys(autoPrice);
+        getDriver().findElement(By.xpath("//input[@name='cloanterm']")).sendKeys(loanTerm);
+        getDriver().findElement(By.xpath("//input[@name='cinterestrate']")).sendKeys(interestRate);
+        getDriver().findElement(By.xpath("//input[@name='cdownpayment']")).sendKeys(downPayment);
+        getDriver().findElement(By.xpath("//input[@name='ctradeinvalue']")).sendKeys(tradeInValue);
+        WebElement selectStateEl = getDriver().findElement(By.xpath("//select[@name='cstate']"));
+        new Select(selectStateEl).selectByVisibleText(state);
+        getDriver().findElement(By.xpath("//input[@name='csaletax']")).sendKeys(percentTax);
+        getDriver().findElement(By.xpath("//input[@name='ctitlereg']")).sendKeys(fees);
+
+    }
+
+    @Then("I verify monthly pay is {string}")
+    public void iVerifyMonthlyPayIs(String payments) {
+        String resultValue = getDriver().findElement(By.xpath("//h2[contains(@class,'result')]")).getText();
+        assertThat(resultValue.endsWith(payments)).isTrue();
+    }
+
+    @When("I go to {string} tab")
+    public void iGoToTab(String tab) throws InterruptedException {
+        getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        getDriver().findElement(By.xpath("//a[@class='menuitem'][contains(text(),'" + tab + "')]")).click();
+        WebElement searchEl = getDriver().findElement(By.xpath("//input[contains(@class,'search')]"));
+        getWait().until(ExpectedConditions.elementToBeClickable(searchEl));
+    }
+
+    @And("I perform {string} help search")
+    public void iPerformHelpSearch(String search) throws InterruptedException {
+        WebElement searchEl = getDriver().findElement(By.xpath("//input[contains(@class,'search')]"));
+        searchEl.sendKeys(search);
+        getDriver().findElement(By.xpath("//button[contains(@class,'search-button')]")).click();
+        WebElement itemSearchEl = getDriver().findElement(By.xpath("//*[contains(@class,'ResultStencil')]"));
+        getWait().until(ExpectedConditions.visibilityOf(itemSearchEl));
+    }
+
+    @Then("I verify that no results of {string} available in help search")
+    public void iVerifyThatNoResultsOfAvailableInHelpSearch(String searchText) {
+        //every single item verification
+        List<WebElement> list = getDriver().findElements(By.xpath("//*[contains(@class,'ResultStencil')]"));
+        for (WebElement item : list) {
+            System.out.println(item.getText());
+            assertThat(item.getText()).doesNotContain(searchText);
+        }
+    }
+
+    @When("I go to {string} under {string}")
+    public void iGoToUnder(String service, String tab) {
+        WebElement tabEl = getDriver().findElement(By.xpath("//a[@class='menuitem'][contains(text(),'" + tab + "')]"));
+        getActions().moveToElement(tabEl).perform();
+        getDriver().findElement(By.xpath("//a[string()='" + service + "']")).click();
+        getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    }
+
+    @And("I search for {string}")
+    public void iSearchFor(String address) {
+        WebElement addressEl = getDriver().findElement(By.xpath("//input[@id='address']"));
+        getWait().until(ExpectedConditions.elementToBeClickable(addressEl));
+        addressEl.sendKeys(address);
+        addressEl.sendKeys(Keys.ENTER);
+    }
+
+    @And("I click {string} on the map")
+    public void iClickOnTheMap(String button) {
+        WebElement toggle = getDriver().findElement(By.xpath("//a[@class='route-table-toggle']"));
+        getWait().until(ExpectedConditions.elementToBeClickable(toggle));
+        JavascriptExecutor executor = (JavascriptExecutor) getDriver();
+        executor.executeScript("arguments[0].click();", toggle);
+    }
+
+    @When("I click {string} on the table")
+    public void iClickOnTheTable(String arg0) throws InterruptedException {
+        getDriver().findElement(By.xpath("//a[@class='totalsArea']")).click();
+        Thread.sleep(3000);
+//        WebElement element = getDriver().findElement(By.xpath(xpath));
+//        JavascriptExecutor executor = (JavascriptExecutor) getDriver();
+//        executor.executeScript("arguments[0].click();", element);
+    }
+
+    @And("I close modal window")
+    public void iCloseModalWindow() {
+        WebElement close = getDriver().findElement(By.xpath("//div[@id='modal-box-closeModal']"));
+        getWait().until(ExpectedConditions.elementToBeClickable(close));
+        close.click();
+        WebElement modalWindow = getDriver().findElement(By.xpath("//div[@id='modal-box']"));
+        getWait().until(ExpectedConditions.invisibilityOf(modalWindow));
+    }
+
+    @Then("I verify that summary of all rows of Cost column is equal Approximate Cost in Order Summary")
+    public void iVerifyThatSummaryOfAllRowsOfCostColumnIsEqualApproximateCostInOrderSummary() {
+//used Slava's code
+        // initially we have not all elements
+        // we need to scroll to the last element so more of them loaded (infinite scroll)
+        // we get the number of total expected elements
+        String totalCountString = getDriver().findElement(By.xpath("//a[contains(@class,'totalsArea')]")).getText();
+        int totalCount = Integer.parseInt(totalCountString.replaceAll("\\D*", ""));
+
+        // get locator of table cell list
+        By costListSelector = By.xpath("//td[@idx='7']");
+        // find current element list on the page
+        List<WebElement> costList = getDriver().findElements(costListSelector);
+        // get last element from the current costList
+        int lastIndex = costList.size() - 1;
+        WebElement lastElementInList = costList.get(lastIndex);
+        // we scroll to the current last element
+
+        getActions().moveToElement(lastElementInList).perform();
+        // wait until total number of elements loaded
+        getWait().until(ExpectedConditions.numberOfElementsToBe(costListSelector, totalCount));
+
+        costList = getDriver().findElements(costListSelector);
+
+        // summarize total
+        double actualTotal = 0;
+        for (WebElement cost : costList) {
+            String costString = cost.getText().replace("$", "");
+            double costTotal = Double.parseDouble(costString);
+            actualTotal += costTotal;
+        }
+        System.out.println("Actual total: " + actualTotal);
+
+        String expectedTotalString = getDriver().findElement(By.xpath("//span[@class='approx-cost']")).getText();
+        double expectedTotal = Double.parseDouble(expectedTotalString);
+        System.out.println("Expected total: " + expectedTotal);
+
+        // use approximate match
+        assertThat(actualTotal).isCloseTo(expectedTotal, Percentage.withPercentage(1));
+
+    }
+
 }
 
 

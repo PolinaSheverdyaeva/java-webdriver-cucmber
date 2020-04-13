@@ -3,8 +3,11 @@ package definitions;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.By;
 
 import java.util.*;
+
+import static support.TestContext.getDriver;
 
 public class JavaStepDefs {
     @Given("I say hello world")
@@ -306,5 +309,7 @@ public class JavaStepDefs {
         System.out.println("b: " + b);
 
     }
+
+
 
 }

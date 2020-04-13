@@ -44,6 +44,60 @@ Feature: USPS test suite
     And I fill in "4970 El Camino Real 110" street, "Los Altos" city, "CA" state
     Then I print the phone number and validate it is "800-275-8777"
 
+  @converter1
+  Scenario: Validate Fahrenheit to Celsius
+    Given I go to "converter" page
+    When I click on "Temperature"
+    And I set "Fahrenheit" to "Celsius"
+    Then I enter into From field "54" and verify "12.2" result
+
+  @converter2
+  Scenario Outline: Validate  to different measurements
+    Given I go to "converter" page
+    When I click on "<measure>"
+    And I set "<unitFrom>" to "<unitTo>"
+    Then I enter into From field "<value>" and verify "<passedResult>" result
+    Examples:
+      | measure     | unitFrom   | unitTo    | value | passedResult |
+      | Temperature | Fahrenheit | Celsius   | 54    | 12.2         |
+      | Weight      | Pound      | Kilogram  | 170   | 77           |
+      | Length      | Mile       | Kilometer | 50    | 80.4         |
+
+
+  @calculator1
+  Scenario: Verify calculator result
+    Given I go to "calculator" page
+    And I clear all calculator fields
+    And I calculate
+    Then I verify "Please provide a positive auto price." calculator error
+    Then I verify "Please provide a positive interest value." calculator error
+    And I enter "25000" price, "60" months, "4.5" interest, "5000" downpayment, "0" trade-in, "California" state, "7" percent tax, "300" fees
+    And I calculate
+    Then I verify monthly pay is "$372.86"
+
+  @usps12
+  Scenario: Quadcopters delivery
+    Given I go to "usps" page
+    When I go to "Help" tab
+    And I perform "Quadcopters delivery" help search
+    Then I verify that no results of "Quadcopters delivery" available in help search
+
+  @usps14
+  Scenario: Every door direct mail
+    Given I go to "usps" page
+    When I go to "Every Door Direct Mail" under "Business"
+    And I search for "4970 El Camino Real, Los Altos, CA 94022"
+    And I click "Show Table" on the map
+    When I click "Select All" on the table
+    And I close modal window
+    Then I verify that summary of all rows of Cost column is equal Approximate Cost in Order Summary
+
+#  @usps15
+#  Scenario: Search
+#    Given I go to "usps" page
+#    And I search on main page for "PO BOX"
+
+
 #  @usps9
 #  Scenario: Informed delivery enabled
 #    Given I go to "usps" page
@@ -67,46 +121,6 @@ Feature: USPS test suite
 #    When I select "Priority Mail | USPS" in results
 #    And I click "Ship Now" button
 #    Then I validate that Sign In is required
-#
-#  @usps12
-#  Scenario: Quadcopters delivery
-#    Given I go to "usps" page
-#    When I go to "Help" tab
-#    And I perform "Quadcopters delivery" help search
-#    Then I verify that no results of "Quadcopters delivery" available in help search
-
-#  @usps15
-#  Scenario: Search
-#    Given I go to "usps" page
-#    And I search on main page for "PO BOX"
 
 
-#  @usps14
-#  Scenario: Every door direct mail
-#    Given I go to "usps" page
-#    When I go to "Every Door Direct Mail" under "Business"
-#    And I search for "4970 El Camino Real, Los Altos, CA 94022"
-#    And I click "Show Table" on the map
-#    When I click "Select All" on the table
-#    And I close modal window
-#    Then I verify that summary of all rows of Cost column is equal Approximate Cost in Order Summary
-#
-#
-#  @converter1
-#  Scenario: Validate Fahrenheit to Celsius
-#    Given I go to "converter" page
-#    When I click on "Temperature"
-#    And I set "Fahrenheit" to "Celsius"
-#    Then I enter into From field "54" and verify "12.2" result
-#
-#  @calculator1
-#  Scenario: Verify calculator result
-#    Given I go to "calculator" page
-#    And I clear all calculator fields
-#    And I calculate
-#    Then I verify "Please provide a positive auto price." calculator error
-#    Then I verify "Please provide a positive interest value." calculator error
-#    And I enter "25000" price, "60" months, "4.5" interest, "5000" downpayment, "0" trade-in, "California" state, "7" percent tax, "300" fees
-#    And I calculate
-#    Then I verify monthly pay is "$372.86"
 

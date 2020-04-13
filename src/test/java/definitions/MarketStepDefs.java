@@ -24,6 +24,12 @@ public class MarketStepDefs {
     public void iGoToPage(String page) {
         getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         switch (page.toLowerCase()) {
+            case "calculator":
+                getDriver().get("http://www.calculator.net/");
+                break;
+            case "converter":
+                getDriver().get("https://www.unitconverters.net/");
+                break;
             case "usps":
                 getDriver().get("https://www.usps.com/");
                 break;
