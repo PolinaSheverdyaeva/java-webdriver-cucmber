@@ -92,10 +92,10 @@ Feature: USPS test suite
     And I close modal window
     Then I verify that summary of all rows of Cost column is equal Approximate Cost in Order Summary
 
-#  @usps15
-#  Scenario: Search
-#    Given I go to "usps" page
-#    And I search on main page for "PO BOX"
+  @usps15
+  Scenario: Search
+    Given I go to "usps" page
+    And I search on main page for "PO BOX"
 
 
 #  @usps9

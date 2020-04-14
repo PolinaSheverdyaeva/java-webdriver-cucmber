@@ -373,6 +373,15 @@ public class UspsStepDefs {
 
     }
 
+    @And("I search on main page for {string}")
+    public void iSearchOnMainPageFor(String searchText) {
+        WebElement searchLookingGlass = getDriver().findElement(By.xpath("//li[contains(@class,'nav-search')]"));
+        getActions().moveToElement(searchLookingGlass).perform();
+
+        WebElement searchInput = getDriver().findElement(By.xpath("//input[@id='global-header--search-track-search']"));
+        searchInput.sendKeys(searchText + Keys.ENTER);
+//        searchInput.sendKeys(Keys.ENTER);
+    }
 }
 
 
