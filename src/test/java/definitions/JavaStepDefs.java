@@ -3,11 +3,8 @@ package definitions;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
-import org.openqa.selenium.By;
 
 import java.util.*;
-
-import static support.TestContext.getDriver;
 
 public class JavaStepDefs {
     @Given("I say hello world")
@@ -229,8 +226,10 @@ public class JavaStepDefs {
 
 
     }
+
     @Given("Trying to solve tasks")
     public void tryingToSolveTasks() {
+        // Sorting array and moving zeros to the end of the array
         int[] nums = {0,1,0,3,12};
             int n = nums.length;
             int count = 0;
@@ -242,8 +241,11 @@ public class JavaStepDefs {
                 swapNumbers(nums,count++,i);
             }
             for (int j = 0; j < n; j++){
-                System.out.print(nums[j]+",");
+                if (j > 0)
+                    System.out.print(",");
+                System.out.print(nums[j]);
             }
+            System.out.println();
         }
 
         public static void swapNumbers(int [] arr, int pos1, int pos2){
@@ -253,7 +255,36 @@ public class JavaStepDefs {
         }
 
 
+    @And("I find element that appears once in array {string}")
+    public void iFindElementThatAppearsOnlceInArray(String array) {
+        // Return element that appears only once
 
+//        static int findSingle(int nums[])
+        {
+            String[] elements = array.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\\s", "").split(",");
+            int[] nums = new int[elements.length];
+            for (int i=0; i < elements.length; i++) {
+                try {
+                    nums[i] = Integer.parseInt(elements[i]);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (nums.length == 0)
+//                return;
+                throw new IllegalArgumentException("nums is empty");
+
+            // Do XOR of all elements and return
+            int res = nums[0];
+            for (int i = 1; i < nums.length; i++) {
+                res = res ^ nums[i];
+            }
+
+            System.out.println("Element appears once in array is " + res);
+        }
+
+    }
 
 
 
@@ -340,6 +371,20 @@ public class JavaStepDefs {
 
     }
 
-
-
+    @And("I compute number of trailing zeros in factorials - {string}")
+    public void iComputeNumberOfTrailingZerosInFactorials(String input) {
+        int factorial = 1;
+        for ( int counter = Integer.valueOf(input); counter >= 1; counter-- ) {
+            factorial *= counter;
+        }
+        String sf = "" + factorial;
+        int res = 0;
+        for (int i = sf.length() - 1; i >= 0; i--) {
+            if (sf.charAt(i) != '0') {
+                break;
+            }
+            res++;
+        }
+        System.out.println("Factorial trailing zeros count: " + res);
+    }
 }

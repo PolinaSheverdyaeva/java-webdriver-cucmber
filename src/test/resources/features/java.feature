@@ -29,8 +29,16 @@ Feature: Java steps
   Scenario: Challenges
     Given I solve  coding challenges
 
-    @java5
-    Scenario: Arrays from Katya
-      Given Trying to solve tasks
+  @java5
+  Scenario Outline: Arrays from Katya
+    Given Trying to solve tasks
+    And I find element that appears once in array "<array>"
+    And I compute number of trailing zeros in factorials - "<input>"
+    Examples:
+      |  array      | input |
+      | [2,2,1]     | 3     |
+      | [4,1,2,1,2] | 5     |
+
+
 
 

@@ -18,12 +18,16 @@ import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static support.TestContext.getDriver;
+import static support.TestContext.getExecutor;
 
 public class MarketStepDefs {
     @Given("I go to {string} page")
     public void iGoToPage(String page) {
         getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         switch (page.toLowerCase()) {
+            case "ecosia":
+                getDriver().get("https://www.ecosia.org/");
+                break;
             case "calculator":
                 getDriver().get("http://www.calculator.net/");
                 break;
@@ -295,6 +299,51 @@ public class MarketStepDefs {
 //        carsSelect.selectByValue("Ford");
 ////        carsSelect.deselectByValue("Ford");
 //        carsSelect.selectByValue("BMW");
+    }
+
+    @And("I {string} third party agreement")
+    public void iThirdPartyAgreement(String action) {
+        getDriver().findElement(By.xpath("//button[@id='thirdPartyButton']"));
+        if (action.equals("accept")){
+            getDriver().switchTo().alert().accept();
+        } else {
+        getDriver().switchTo().alert().dismiss();
+    }
+}
+
+    @And("fill out additional info with name {string} and phone{string}")
+    public void fillOutAdditionalInfoWithNameAndPhone(String name, String phone) throws InterruptedException {
+        getDriver().switchTo().frame("additionalInfo");
+
+        getDriver().findElement(By.xpath("//input[@id='contactPersonName']")).sendKeys(name);
+        getDriver().findElement(By.xpath("//input[@id='contactPersonPhone']")).sendKeys(phone);
+        getDriver().switchTo().defaultContent();
+
+        Thread.sleep(5000);
+    }
+
+    @And("I verify {string} present on related docs page")
+    public void iVerifyPresentOnRelatedDocsPage(String docName) {
+        String originalWindow = getDriver().getWindowHandle();
+        getDriver().findElement(By.xpath("//button[contains(@onclick,'new')]")).click();
+
+        // switch to last window handle
+        for (String handle : getDriver().getWindowHandles()){
+            getDriver().switchTo().window(handle);
+        }
+        String docs = getDriver().findElement(By.xpath("//body")).getText();
+        assertThat(docs).contains(docName);
+        getDriver().close();
+        getDriver().switchTo().window(originalWindow);
+    }
+
+    @And("I fill out search engine field with {string} and search")
+    public void iFillOutSearchEngineFieldWithAndSearch(String searchValue) throws InterruptedException {
+        getDriver().findElement(By.xpath("//input[@name='q']")).sendKeys(searchValue);
+        WebElement button = getDriver().findElement(By.xpath("//button[(@type='submit')]"));
+//        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        getExecutor().executeScript("arguments[0].click();", button);
+        System.out.println();
     }
 }
 

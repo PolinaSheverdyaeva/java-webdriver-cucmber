@@ -2,6 +2,7 @@
 package support;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -62,21 +63,27 @@ public class TestContext {
 //        return new Actions(driver);
 //    }
 
-    public static WebDriverWait getWait(){
-        return new WebDriverWait(driver,5);
+//    public static WebDriverWait getWait(){
+//
+//        return new WebDriverWait(driver,5);
+//    }
+
+//    public static WebDriverWait getWait(int timeout){
+//        int pollingInterval = 200;
+//        return new WebDriverWait(driver, timeout, pollingInterval);
+//    }
+
+    public static WebDriverWait getWait() {
+        return getWait(5);
     }
 
-    public static WebDriverWait getWait(int timeout){
+    public static WebDriverWait getWait(int timeout) {
         return new WebDriverWait(driver, timeout);
     }
 
-//    public static WebDriverWait getWait() {
-//        return getWait(5);
-//    }
-
-//    public static WebDriverWait getWait(int timeout) {
-//        return new WebDriverWait(driver, timeout);
-//    }
+    public static JavascriptExecutor getExecutor(){
+        return (JavascriptExecutor) driver;
+    }
 
     public static void initialize() {
         initialize("chrome", false);
