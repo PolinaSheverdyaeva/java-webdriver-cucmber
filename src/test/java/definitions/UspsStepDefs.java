@@ -76,6 +76,7 @@ public class UspsStepDefs {
         for (WebElement item : list) {
             String itemText = item.getText();
             System.out.println(item.getText());
+            System.out.println(list.size());
 //            assertThat(item.getText()).contains(zip);
             assertThat(itemText).contains(zip);
 
@@ -159,7 +160,7 @@ public class UspsStepDefs {
 //            address.sendKeys(street);
 
         //3 option - use while loop
-        for(int i = 0; !address.getAttribute("value").equals(street) && i < 5; i++ ){
+        for (int i = 0; !address.getAttribute("value").equals(street) && i < 5; i++) {
             address.clear();
             address.sendKeys(street);
         }
@@ -178,7 +179,7 @@ public class UspsStepDefs {
 
     @When("I click on {string}")
     public void iClickOn(String measurement) throws InterruptedException {
-        getDriver().findElement(By.xpath("//div[@id='menu']/ul/li/a[contains(text(),'"+ measurement +"')]")).click();
+        getDriver().findElement(By.xpath("//div[@id='menu']/ul/li/a[contains(text(),'" + measurement + "')]")).click();
         WebElement calFrom = getDriver().findElement(By.xpath("//select[@id='calFrom']"));
         getWait().until(ExpectedConditions.elementToBeClickable(calFrom));
 
@@ -381,6 +382,67 @@ public class UspsStepDefs {
         WebElement searchInput = getDriver().findElement(By.xpath("//input[@id='global-header--search-track-search']"));
         searchInput.sendKeys(searchText + Keys.ENTER);
 //        searchInput.sendKeys(Keys.ENTER);
+    }
+
+    @When("I perform {string} search")
+    public void iPerformSearch(String searchValue) throws InterruptedException {
+        //mouse over the search loop icon
+        WebElement searchLoop = getDriver().findElement(By.xpath("//li[@class='nav-search menuheader']"));
+        getActions().moveToElement(searchLoop).perform();
+        String upperSearchValue = searchValue.toUpperCase();
+        getDriver().findElement(By.xpath("//div[@class='repos']//a[contains(text(),'" + upperSearchValue + "')]")).click();
+        System.out.println(getDriver().getTitle());
+        // explicit wait
+
+    }
+
+    @And("I set {string} in filters")
+    public void iSetInFilters(String filter) {
+        By locator = By.xpath("//div[@class='white-spinner-container']");
+//        WebElement filter = getDriver().findElement(By.xpath("//div[@id='dyn_nav_col']"));
+        getWait(60).until(ExpectedConditions.invisibilityOfElementLocated(locator));
+        getDriver().findElement(By.xpath("//a[@class='dn-attr-a'][contains(text(),'" + filter + "')]")).click();
+    }
+
+    @Then("I verify that {string} results found")
+    public void iVerifyThatResultsFound(String count) throws InterruptedException {
+        By locator = By.xpath("//div[@class='white-spinner-container']");
+//        WebElement filter = getDriver().findElement(By.xpath("//div[@id='dyn_nav_col']"));
+        getWait(60).until(ExpectedConditions.invisibilityOfElementLocated(locator));
+        List<WebElement> list = getDriver().findElements(By.xpath("//li[contains(@class,'result-item')]"));
+        System.out.println("Number of Elements: " + list.size());
+        int numberElements = list.size();
+        int countInt = Integer.valueOf(count);
+        for (WebElement item : list) {
+            System.out.println(item.getText());
+        }
+
+        assertThat(numberElements).isEqualTo(countInt);
+    }
+
+    @When("I select {string} in results")
+    public void iSelectInResults(String sendOption) {
+        getDriver().findElement(By.xpath("//span[text()='" + sendOption + "']")).click();
+    }
+
+
+    @And("I click {string} button")
+    public void iClickButton(String button) throws InterruptedException {
+        getDriver().findElement(By.xpath("//a[contains(text(),'" + button + "')]")).click();
+
+    }
+
+    @Then("I validate that Sign In is required")
+    public void iValidateThatSignInIsRequired() {
+        String firstWindow = getDriver().getWindowHandle();
+        for (String window : getDriver().getWindowHandles()){
+            getDriver().switchTo().window(window);
+        }
+        getWait().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@id='btn-submit']")));
+        WebElement signInButton = getDriver().findElement(By.xpath("//button[@id='btn-submit']"));
+        assertThat(signInButton.isDisplayed()).isTrue();
+        getDriver().switchTo().window(firstWindow);
+
     }
 }
 

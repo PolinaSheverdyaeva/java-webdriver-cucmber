@@ -226,33 +226,41 @@ public class JavaStepDefs {
 
 
     }
-
     @Given("Trying to solve tasks")
     public void tryingToSolveTasks() {
-        // Sorting array and moving zeros to the end of the array
         int[] nums = {0,1,0,3,12};
-            int n = nums.length;
-            int count = 0;
-            // Traverse the array. If element encountered is non-zero, then
-            // replace the element at index 'count' with this element
-            for (int i = 0; i < n; i++){
-                if (nums[i] != 0)
-                // arr[count++] = arr[i]; // here count is incremented
+        int n = nums.length;
+        int count = 0;
+        for (int i = 0; i < n; i++){
+            if (nums[i] != 0)
                 swapNumbers(nums,count++,i);
-            }
-            for (int j = 0; j < n; j++){
-                if (j > 0)
-                    System.out.print(",");
-                System.out.print(nums[j]);
-            }
-            System.out.println();
         }
+        for (int j = 0; j < n; j++){
+            System.out.print(nums[j]+",");
+        }
+    }
+    public static void swapNumbers(int [] arr, int pos1, int pos2){
+        int temp  = arr[pos2];
+        arr[pos2] = arr[pos1];
+        arr[pos1] = temp;
+    }
+    @And("I compute number of trailing zeros in factorials - {string}")
+    public void iComputeNumberOfTrailingZerosInFactorials(String input) {
+        int factorial = 1;
+        for ( int counter = Integer.valueOf(input); counter >= 1; counter-- ) {
+            factorial *= counter;
+        }
+        String sf = "" + factorial;
+        int res = 0;
+        for (int i = sf.length() - 1; i >= 0; i--) {
+            if (sf.charAt(i) != '0') {
+                break;
+            }
+            res++;
+        }
+        System.out.println("Factorial trailing zeros count: " + res);
+    }
 
-        public static void swapNumbers(int [] arr, int pos1, int pos2){
-            int temp  = arr[pos2];
-            arr[pos2] = arr[pos1];
-            arr[pos1] = temp;
-        }
 
 
     @And("I find element that appears once in array {string}")
@@ -282,10 +290,10 @@ public class JavaStepDefs {
             }
 
             System.out.println("Element appears once in array is " + res);
+
         }
 
     }
-
 
 
     @Given("I work with maps")
@@ -324,17 +332,112 @@ public class JavaStepDefs {
     }
 
 
+    public void printNum(int n){
+        for( int i = 0; i <= n; i++){
+            System.out.println(i);
+        }
+    }
+
+    public void printAnyNum(int n){
+        if (n > 0) {
+            for (int i = 0; i <= n; i++) {
+                System.out.println(i);
+            }
+        } else {
+            for( int i = 0; i >= n; i--){
+                System.out.println(i);
+            }
+        }
+    }
+
+    public void printArray(int [] arr){
+        for( int i = 0; i < arr.length; i++){
+            System.out.println("print array integers: " +arr[i]);
+        }
+    }
+
+    public void printEvenNum(int [] arr){
+        System.out.println("Even numbers:");
+        for (int i = 0; i < arr.length; i++){
+            if(arr[i] % 2 == 0)
+            {
+                System.out.print(arr[i]+" ");
+            }
+        }
+        System.out.println();
+    }
+
+    public boolean isEmpty (int [] arr){
+        boolean res = arr.length == 0;
+        System.out.println("Array is empty: " + res);
+        return res;
+
+    }
+
+    public boolean isNotEmpty (int [] arr){
+        boolean res = arr.length > 0;
+        System.out.println("Array is not empty: " + res);
+        return res;
+    }
+
+
+    public boolean isContaining(Object[] arr, Object otherElement) {
+        boolean res = Arrays.asList(arr).contains(otherElement);
+//        for (int i = 0; i < arr.length; i++) {
+//            if (arr[i].equals(otherElement)) {
+//                res = true;
+//            }
+//        }
+//        res = false;
+        System.out.println("is array containing " + otherElement + ": " + res);
+        return res;
+    }
+
+
+
     @Given("I solve  coding challenges")
     public void iSolveCodingChallenges() {
         //test cases
+        // Write a function that prints all numbers from 0 up to n
+        printNum(10);
+        // Write a function that supports also negative numbers from 0 up to n
+        printAnyNum(-10);
+        //  Write a function that prints all integer array
+        int[] nums = {0,1,0,3,12};
+        printArray(nums);
+        //Write a function that prints all even numbers from integer array
+        printEvenNum(nums);
+        // Write a function that checks if array is empty
+        isEmpty(nums);
+        //Write a function that checks if array is not empty
+        isNotEmpty(nums);
+        //Write a function that checks if array contains another element
+        Object[] arr = {1,2,3,2,1,1,2,8,3};
+        isContaining(arr, Integer.valueOf(10));
+        // swap
         swap(3, 5);
         //boundaries
         isDivisibleBy3and4(9);
         isDivisibleBy3and4(8);
         isDivisibleBy3and4(12);
         isDivisibleBy3and4(17);
+
     }
 
+
+
+
+
+    void swap(int a, int b) {
+        System.out.println("Swap func");
+        System.out.println("a: " + a);
+        System.out.println("b: " + b);
+        int temp = a;
+        a = b;
+        b = temp;
+        System.out.println("a: " + a);
+        System.out.println("b: " + b);
+    }
     //solutions
     void isDivisibleBy3and4(int num){
         System.out.println("Is divisible func " + num);
@@ -357,34 +460,5 @@ public class JavaStepDefs {
             System.out.println("Not div by 3 and 4");
         }
 
-    }
-
-    void swap(int a, int b){
-        System.out.println("Swap func");
-        System.out.println("a: " + a);
-        System.out.println("b: " + b);
-        int temp = a;
-        a = b;
-        b = temp;
-        System.out.println("a: " + a);
-        System.out.println("b: " + b);
-
-    }
-
-    @And("I compute number of trailing zeros in factorials - {string}")
-    public void iComputeNumberOfTrailingZerosInFactorials(String input) {
-        int factorial = 1;
-        for ( int counter = Integer.valueOf(input); counter >= 1; counter-- ) {
-            factorial *= counter;
-        }
-        String sf = "" + factorial;
-        int res = 0;
-        for (int i = sf.length() - 1; i >= 0; i--) {
-            if (sf.charAt(i) != '0') {
-                break;
-            }
-            res++;
-        }
-        System.out.println("Factorial trailing zeros count: " + res);
     }
 }

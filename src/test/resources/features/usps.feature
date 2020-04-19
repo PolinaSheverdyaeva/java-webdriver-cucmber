@@ -13,12 +13,12 @@ Feature: USPS test suite
       | 11 Wall St          | New York  | NY    | 10005 |
       | 111 S Michigan Ave  | Chicago   | IL    | 60603 |
 
-#  @usps2
-#  Scenario: Validate ZIP code for NY Stock Exchange
-#    Given I go to "usps" page
-#    When I go to Lookup ZIP page by address
-#    And I fill out "11 Wall St" street, "New York" city, "NY" state
-#    Then I validate "10005" zip code exists in the result
+  @usps2
+  Scenario: Validate ZIP code for NY Stock Exchange
+    Given I go to "usps" page
+    When I go to Lookup ZIP page by address
+    And I fill out "11 Wall St" street, "New York" city, "NY" state
+    Then I validate "10005" zip code exists in the result
 #
 #  @usps3
 #  Scenario: Validate ZIP code of Art Institute of Chicago
@@ -97,6 +97,16 @@ Feature: USPS test suite
     Given I go to "usps" page
     And I search on main page for "PO BOX"
 
+  @usps11
+  Scenario: Verify location
+    Given I go to "usps" page
+    When I perform "Free Boxes" search
+    And I set "Mail & Ship" in filters
+    Then I verify that "7" results found
+    When I select "Priority Mail | USPS" in results
+    And I click "Ship Now" button
+    Then I validate that Sign In is required
+
 
 #  @usps9
 #  Scenario: Informed delivery enabled
@@ -112,15 +122,7 @@ Feature: USPS test suite
 #    And I enter "23424" zip for informed delivery
 #    Then I verify that informed delievry is "disabled"
 
-#  @usps11
-#  Scenario: Verify location
-#    Given I go to "usps" page
-#    When I perform "Free Boxes" search
-#    And I set "Mail & Ship" in filters
-#    Then I verify that "7" results found
-#    When I select "Priority Mail | USPS" in results
-#    And I click "Ship Now" button
-#    Then I validate that Sign In is required
+
 
 
 
