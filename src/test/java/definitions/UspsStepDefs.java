@@ -409,10 +409,13 @@ public class UspsStepDefs {
         By locator = By.xpath("//div[@class='white-spinner-container']");
 //        WebElement filter = getDriver().findElement(By.xpath("//div[@id='dyn_nav_col']"));
         getWait(60).until(ExpectedConditions.invisibilityOfElementLocated(locator));
+// //*[@id='records']/li
         List<WebElement> list = getDriver().findElements(By.xpath("//li[contains(@class,'result-item')]"));
         System.out.println("Number of Elements: " + list.size());
         int numberElements = list.size();
-        int countInt = Integer.valueOf(count);
+//        int countInt = Integer.valueOf(count);
+
+        int countInt= Integer.parseInt(count);
         for (WebElement item : list) {
             System.out.println(item.getText());
         }

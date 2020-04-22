@@ -39,6 +39,9 @@ Feature: Java steps
       | [2,2,1]     | 3     |
       | [4,1,2,1,2] | 5     |
 
+  @java6
+  Scenario: Classes
+    Given I run classes
 
 
 

@@ -55,7 +55,7 @@ Feature: Marketing app test suite
     @market7
     Scenario: Related docs
       Given I go to "quote" page
-      And I verify "Document2" present on related docs page
+      And I verify "Document 2" present on related docs page
       And I fill out optional fields
 
     @ecosia2

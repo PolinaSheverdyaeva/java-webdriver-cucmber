@@ -102,11 +102,10 @@ Feature: USPS test suite
     Given I go to "usps" page
     When I perform "Free Boxes" search
     And I set "Mail & Ship" in filters
-    Then I verify that "7" results found
+    Then I verify that "6" results found
     When I select "Priority Mail | USPS" in results
     And I click "Ship Now" button
     Then I validate that Sign In is required
-
 
 #  @usps9
 #  Scenario: Informed delivery enabled

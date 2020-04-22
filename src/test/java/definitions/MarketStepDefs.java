@@ -37,6 +37,9 @@ public class MarketStepDefs {
             case "usps":
                 getDriver().get("https://www.usps.com/");
                 break;
+            case "ups":
+                getDriver().get("https://www.ups.com/us/en/Home.page");
+                break;
             case "quote":
                 getDriver().get("https://skryabin.com/market/quote.html");
                 break;
@@ -333,6 +336,8 @@ public class MarketStepDefs {
         }
         String docs = getDriver().findElement(By.xpath("//body")).getText();
         assertThat(docs).contains(docName);
+        assertThat(getDriver().getTitle()).isEqualTo("Documents Page");
+
         getDriver().close();
         getDriver().switchTo().window(originalWindow);
     }

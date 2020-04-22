@@ -3,6 +3,8 @@ package definitions;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
+import pages.Pet;
+import pages.Snake;
 
 import java.util.*;
 
@@ -298,16 +300,25 @@ public class JavaStepDefs {
 
     @Given("I work with maps")
     public void iWorkWithMaps() {
-        Map<String, String> user = Map.of(
-                "username", "jdoe",
-                "password", "welcome",
-                "email", "john@doe.com"
-        );
-        Map<String, String> admin = Map.of(
-                "username", "admin",
-                "password", "pass1",
-                "email", "admin@doe.com"
-        );
+        //java 11 syntax
+//        Map<String, String> user = Map.of(
+//                "username", "jdoe",
+//                "password", "welcome",
+//                "email", "john@doe.com"
+//        );
+//        Map<String, String> admin = Map.of(
+//                "username", "admin",
+//                "password", "pass1",
+//                "email", "admin@doe.com"
+//        );
+        Map<String, String> user = new HashMap<>();
+        user.put("username", "jdoe");
+        user.put("password", "welcome");
+        user.put("email", "john@doe.com");
+        Map<String, String> admin = new HashMap<>();
+        user.put("username", "admin");
+        user.put("password", "pass1");
+        user.put("email", "admin@doe.com");
         System.out.println(user);
         System.out.println(admin);
         System.out.println(user.get("username"));
@@ -422,8 +433,92 @@ public class JavaStepDefs {
         isDivisibleBy3and4(12);
         isDivisibleBy3and4(17);
 
+        //DS Lab 12 04/21/20
+        fizzBuzz(20);
+
+        //DS Lab 13 22 Apr 20
+        reverse3rd("Result of reverse");
+        countChar("abcdefa", 'r');
+        isPrime(1);
+        isPrime(2);
+        isPrime(3);
+        isPrime(4);
+        isPrime(5);
+        isPrime(9);
+        isPrime(17);
     }
 
+    //Revert every 3rd character of a string
+    protected String reverse3rd(String input) {
+        //get every 3rd char of input into a single string
+        StringBuffer sb = new StringBuffer();
+        for (int i = 2; i < input.length(); i+=3) {
+            sb.append(input.charAt(i));
+        }
+
+        //form a result swapping every 3rd char with remembered chars in reverse order
+        StringBuffer res = new StringBuffer();
+        int j = sb.length() - 1;
+        for (int i = 0; i < input.length(); i++) {
+            if ((i+1) % 3 == 0) {
+                res.append(sb.charAt(j--));
+            } else {
+                res.append(input.charAt(i));
+            }
+        }
+        System.out.println("Reverse3rd result: " + res);
+        return res.toString();
+    }
+
+    //Find if number is prime
+    protected boolean isPrime(int num) {
+        boolean res = true;
+        for (int i = 2; i < num; i++) {
+            if (num % i == 0) {
+                res = false;
+                break;
+            }
+        }
+        System.out.println("isPrime input: " + num + ", res: " + res);
+        return res;
+    }
+
+    //Count occurrence of specific character of a string
+    protected int countChar(String inputStr, char inputChar) {
+        int res = 0;
+        for (int i = 0; i < inputStr.length(); i++) {
+            if (inputStr.charAt(i) == inputChar) {
+                res++;
+            }
+        }
+        System.out.println("countChar result: " + res);
+        return res;
+    }
+
+    /*
+    Write a function, accepts integer argument
+    It should print all the numbers up to the argument
+BUT:
+            if number is multiple of 3, it should print Fizz instead of number
+ if number is multiple of 5, it should print Buzz instead of number
+    If it is multiple of both 3 and 5, it should print FizzBuzz instead of number
+Result for 20:
+            1 2 Fizz 4 Buzz Fizz 7 8 Fizz Buzz 11 Fizz 13 14 FizzBuzz 16 17 Fizz 19 Buzz
+
+     */
+    protected void fizzBuzz(int arg) {
+        for (int i = 1; i <= arg; i++) {
+            if (i % 3 == 0 && i % 5 == 0) {
+                System.out.println("FizzBuzz");
+            } else if (i % 3 == 0) {
+                System.out.println("Fizz");
+            } else if (i % 5 == 0) {
+                System.out.println("Buzz");
+            } else {
+                System.out.println(i);
+            }
+        }
+    }
 
 
 
@@ -460,5 +555,36 @@ public class JavaStepDefs {
             System.out.println("Not div by 3 and 4");
         }
 
+    }
+
+
+    @Given("I run classes")
+    public void iRunClasses() {
+        // Encapsulation
+        // Inheritance
+        // Abstraction
+        // Polymorphism - static and dynamic
+
+//        Pet tom = new Cat("Tom");
+//        System.out.println("Cat's name: " + tom.getName());
+//        tom.walk();
+//
+//        tom.eat("fish");
+//        // will go to Cat's implementation of speak() - dynamic POLYMORPHISM
+//        tom.speak();
+//
+//        Pet charlie = new Dog();
+//        charlie.setName("Charlie");
+//        System.out.println("Dog's name: " + charlie.getName());
+//        charlie.walk();
+//        charlie.eat("bone");
+//        // will go to Dog's implementation of speak() - dynamic POLYMORPHISM
+//        charlie.speak();
+
+        Pet crawlie = new Snake();
+        crawlie.setName("crawlie");
+        crawlie.walk();
+        crawlie.eat("mice");
+        crawlie.speak();
     }
 }
