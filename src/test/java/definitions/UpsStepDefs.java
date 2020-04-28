@@ -24,7 +24,6 @@ import static support.TestContext.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 public class UpsStepDefs {
 
     @When("I open {string} menu")

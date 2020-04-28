@@ -345,18 +345,18 @@ public class JavaStepDefs {
 
     public void printNum(int n){
         for( int i = 0; i <= n; i++){
-            System.out.println(i);
+            System.out.print(i);
         }
     }
 
     public void printAnyNum(int n){
         if (n > 0) {
             for (int i = 0; i <= n; i++) {
-                System.out.println(i);
+                System.out.print(i);
             }
         } else {
             for( int i = 0; i >= n; i--){
-                System.out.println(i);
+                System.out.print(i);
             }
         }
     }
@@ -446,6 +446,18 @@ public class JavaStepDefs {
         isPrime(5);
         isPrime(9);
         isPrime(17);
+
+        String str = "WebDriver";// => "revirDbeW"
+        printReversed(str);
+
+        buzzOrFizz(15);
+    }
+
+    // reverse array back
+    void printReversed(String str){
+        for(int i = str.length() - 1; i>= 0; i--){
+            System.out.print(str.charAt(i));
+        }
     }
 
     //Revert every 3rd character of a string
@@ -495,6 +507,7 @@ public class JavaStepDefs {
         return res;
     }
 
+
     /*
     Write a function, accepts integer argument
     It should print all the numbers up to the argument
@@ -522,6 +535,15 @@ public class JavaStepDefs {
 
 
 
+    void buzzOrFizz(int num){
+        if(num % 3 == 0){
+            System.out.println("Fizz");
+        }else if( num % 5 == 0){
+            System.out.println("Buzz");
+        }else if( num % 5 == 0 && num % 3 == 0 ){
+            System.out.println("FizzBuzz");
+        }
+    }
 
     void swap(int a, int b) {
         System.out.println("Swap func");
@@ -587,4 +609,6 @@ public class JavaStepDefs {
         crawlie.eat("mice");
         crawlie.speak();
     }
+
+
 }

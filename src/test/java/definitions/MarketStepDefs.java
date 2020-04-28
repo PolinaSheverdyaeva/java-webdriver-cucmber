@@ -49,6 +49,9 @@ public class MarketStepDefs {
             case "yahoo":
                 getDriver().get("https://au.yahoo.com");
                 break;
+            case "australia post":
+                getDriver().get("https://auspost.com.au/");
+                break;
             default:
 //                System.out.println("Not recohnised page" + page);
                 throw new RuntimeException("Not recognized page! Actual: " + page);
